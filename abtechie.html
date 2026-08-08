@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AbTechie — Interview Knowledge Platform</title>
+<meta name="description" content="AbTechie is an interview preparation and knowledge-sharing platform covering Salesforce, Azure DevOps, Git, Copado and Gearset — from Basic to Architect level — plus a Personality Development track for career growth.">
+<meta name="theme-color" content="#5B7B3B">
+<meta property="og:title" content="AbTechie — Interview Knowledge Platform">
+<meta property="og:description" content="Technical interview prep and personality development for Salesforce, Azure DevOps, Git, Copado and Gearset.">
+<meta property="og:type" content="website">
+<!-- Static single-page app: safe to host as-is on GitHub Pages (e.g. https://abdultechie5519.github.io/abtechie/). No build step, no server-side routing required. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235B7B3B'/%3E%3Ctext x='16' y='22' font-size='15' font-family='sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EAb%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F7F1;
+  --panel:#FFFFFF;
+  --panel-2:#F0F2E8;
+  --line:#DDE2D2;
+  --text:#26301F;
+  --muted:#71795F;
+  --primary:#5B7B3B;
+  --primary-dim:#EAF0E0;
+  --teal:#4C8577;
+  --amber:#B5842A;
+  --red:#B5495A;
+  --basic:#4C8577;
+  --advanced:#B5842A;
+  --architect:#7A6BAE;
+  --shadow:0 10px 30px -12px rgba(60,70,40,0.14);
+  --radius:12px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Plus Jakarta Sans',sans-serif;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Sora',sans-serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+button{font-family:inherit;cursor:pointer;}
+a{color:inherit;}
+::selection{background:var(--primary);color:#fff;}
+.hidden{display:none !important;}
+
+/* ---------- AUTH ---------- */
+#authScreen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(79,70,229,0.08), transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(15,155,142,0.08), transparent 45%),
+    var(--bg);
+}
+.authWrap{
+  display:grid; grid-template-columns:1.05fr 1fr; max-width:940px; width:100%;
+  background:var(--panel); border:1px solid var(--line); border-radius:20px; overflow:hidden; box-shadow:var(--shadow);
+}
+.authBrand{
+  background:linear-gradient(155deg, #4C5F2E 0%, #5B7B3B 55%, #7A9450 100%);
+  padding:48px 40px; display:flex; flex-direction:column; justify-content:space-between; color:#fff; position:relative; overflow:hidden;
+}
+.authBrand::before{
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px);
+  background-size:16px 16px; opacity:0.5;
+}
+.brandLogo{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+.brandMark{width:36px;height:36px;border-radius:10px;background:#fff;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Sora',sans-serif;}
+.brandName{font-size:19px;font-weight:700;letter-spacing:-0.01em;}
+.authTagline{position:relative;z-index:1;}
+.authTagline h1{font-size:30px;line-height:1.28;margin:0 0 12px;font-weight:700;}
+.authTagline p{color:rgba(255,255,255,0.85);font-size:14.5px;line-height:1.65;margin:0;}
+.techPills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;position:relative;z-index:1;}
+.techPill{font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid rgba(255,255,255,0.35);color:#fff;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,0.08);}
+.authNote{position:relative;z-index:1;font-size:11.5px;color:rgba(255,255,255,0.7);padding-top:20px;}
+.authFormSide{padding:44px 40px;display:flex;flex-direction:column;}
+.authTabs{display:flex;gap:22px;margin-bottom:26px;border-bottom:1px solid var(--line);}
+.authTab{background:none;border:none;color:var(--muted);padding:0 0 12px;font-size:14px;font-weight:600;border-bottom:2px solid transparent;}
+.authTab.active{color:var(--text);border-bottom-color:var(--primary);}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+.field input{width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:11px 12px;border-radius:9px;font-size:14px;outline:none;transition:border-color .15s, box-shadow .15s;}
+.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-dim);}
+.rowBetween{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted);margin:2px 0 20px;}
+.rowBetween label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.linkBtn{background:none;border:none;color:var(--primary);font-size:12.5px;padding:0;font-weight:600;}
+.primaryBtn{width:100%;background:var(--primary);color:#fff;border:none;padding:12px;border-radius:9px;font-weight:700;font-size:14px;transition:transform .1s, box-shadow .15s;}
+.primaryBtn:hover{box-shadow:0 10px 22px -8px rgba(79,70,229,0.45);transform:translateY(-1px);}
+.authSwitchNote{margin-top:18px;font-size:13px;color:var(--muted);text-align:center;}
+.pendingBox{background:#FFF7E6;border:1px solid #F5D68C;color:#8A5B00;padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:16px;line-height:1.5;}
+.errorBox{background:#FDEEF0;border:1px solid #F3B9C2;color:#A02540;padding:12px 14px;border-radius:10px;font-size:13px;margin-bottom:16px;}
+
+/* ---------- APP SHELL ---------- */
+#app{display:none;min-height:100vh;}
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh;}
+.sidebar{background:var(--panel);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sidebar .brandLogo{padding:0 6px 22px;}
+.sidebar .brandMark{background:var(--primary);color:#fff;}
+.sidebar .brandName{color:var(--text);}
+.navSection{margin-top:16px;}
+.navLabel{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:0 10px 8px;font-weight:700;}
+.navItem{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;color:var(--muted);font-size:13.5px;font-weight:600;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+.navItem:hover{background:var(--panel-2);color:var(--text);}
+.navItem.active{background:var(--primary-dim);color:var(--primary);}
+.navBadge{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;flex-shrink:0;}
+.navCount{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
+.sidebarFoot{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);}
+.userChip{display:flex;align-items:center;gap:10px;padding:8px;border-radius:9px;}
+.userAvatar{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;}
+.userChip small{color:var(--muted);display:block;font-size:11px;}
+.logoutBtn{background:none;border:1px solid var(--line);color:var(--muted);font-size:12px;padding:7px;border-radius:8px;margin-top:10px;width:100%;font-weight:600;}
+.logoutBtn:hover{color:var(--red);border-color:var(--red);}
+.adminTag{display:inline-block;font-size:9.5px;background:#EEF0FF;color:var(--primary);padding:2px 6px;border-radius:20px;margin-left:6px;font-weight:700;letter-spacing:.03em;}
+
+.main{padding:28px 34px;max-width:1220px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:12px;}
+.pageTitle{font-size:24px;font-weight:700;margin:0;}
+.pageSub{color:var(--muted);font-size:13.5px;margin-top:4px;}
+.headerRight{display:flex;gap:10px;align-items:center;}
+
+.statGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:30px;}
+.statCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:border-color .15s, transform .1s, box-shadow .15s;}
+.statCard:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow);}
+.statCard .navBadge{margin-bottom:12px;}
+.statCard .num{font-family:'Sora',sans-serif;font-size:26px;font-weight:700;}
+.statCard .lbl{font-size:12.5px;color:var(--muted);margin-top:2px;font-weight:600;}
+.statCard .breakdown{display:flex;gap:8px;margin-top:12px;font-size:10.5px;font-family:'JetBrains Mono',monospace;color:var(--muted);}
+.sectionTitle{font-size:13.5px;font-weight:700;margin:26px 0 12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
+.searchBox{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;display:flex;align-items:center;gap:8px;}
+.searchBox input{background:none;border:none;color:var(--text);outline:none;font-size:13.5px;width:100%;}
+.selectBox{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:9px 10px;border-radius:9px;font-size:13px;outline:none;font-weight:600;}
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:9px 14px;border-radius:9px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{border-color:var(--primary);color:var(--primary);}
+.btn.primary{background:var(--primary);color:#fff;border:none;}
+.btn.primary:hover{opacity:.92;color:#fff;}
+.btn.danger:hover{border-color:var(--red);color:var(--red);}
+.btn.success{background:var(--teal);color:#fff;border:none;}
+
+.qList{display:flex;flex-direction:column;gap:12px;}
+.qCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .15s, box-shadow .15s;}
+.qCard.dragging{opacity:0.4;}
+.qCard:hover{border-color:#C9CEDF;box-shadow:var(--shadow);}
+.qHead{display:flex;align-items:flex-start;gap:12px;padding:16px 16px 14px;}
+.dragHandle{cursor:grab;color:var(--muted);padding-top:3px;user-select:none;}
+.dragHandle:active{cursor:grabbing;}
+.qMain{flex:1;cursor:pointer;}
+.qMeta{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap;}
+.diffBadge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:20px;font-weight:700;letter-spacing:.03em;}
+.diffBadge.basic{background:rgba(15,155,142,0.12);color:var(--basic);}
+.diffBadge.advanced{background:rgba(217,127,20,0.12);color:var(--advanced);}
+.diffBadge.architect{background:rgba(139,92,246,0.12);color:var(--architect);}
+.orderTag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);}
+.qText{font-size:14.5px;font-weight:600;line-height:1.5;}
+.qActions{display:flex;gap:6px;flex-shrink:0;}
+.iconBtn{background:none;border:1px solid var(--line);color:var(--muted);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.iconBtn:hover{color:var(--text);border-color:#B9BEDA;}
+.iconBtn.danger:hover{color:var(--red);border-color:var(--red);}
+.answerPanel{border-top:1px solid var(--line);padding:16px;font-size:13.8px;line-height:1.75;color:#333A4D;background:var(--panel-2);white-space:pre-wrap;}
+.answerPanel img{max-width:100%;border-radius:10px;margin-top:10px;border:1px solid var(--line);}
+.chevron{transition:transform .15s;color:var(--muted);flex-shrink:0;padding-top:3px;}
+.qCard.open .chevron{transform:rotate(180deg);}
+
+.emptyState{text-align:center;padding:60px 20px;color:var(--muted);}
+.emptyState .em-badge{width:44px;height:44px;border-radius:12px;background:var(--panel-2);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:'JetBrains Mono',monospace;color:var(--primary);}
+
+.overlay{position:fixed;inset:0;background:rgba(20,24,40,0.45);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50;}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;width:100%;max-width:660px;max-height:88vh;overflow-y:auto;padding:26px;}
+.modal.wide{max-width:820px;}
+.modalHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.modalHead h3{margin:0;font-size:18px;}
+.closeX{background:none;border:none;color:var(--muted);font-size:18px;}
+textarea{width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:11px 12px;border-radius:9px;font-size:13.8px;resize:vertical;font-family:inherit;outline:none;}
+textarea:focus{border-color:var(--primary);}
+.charCount{font-size:11px;color:var(--muted);text-align:right;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+.charCount.over{color:var(--red);}
+.imgUploadBlock{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px;}
+.imgUploadLabel{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:8px;}
+.imgUploadRow{display:flex;flex-wrap:wrap;gap:8px;}
+.imgThumb{position:relative;width:68px;height:68px;border-radius:10px;overflow:hidden;border:1px solid var(--line);}
+.imgThumb img{width:100%;height:100%;object-fit:cover;}
+.imgThumb .rm{position:absolute;top:3px;right:3px;background:rgba(20,24,40,.65);color:#fff;border:none;width:19px;height:19px;border-radius:50%;font-size:11px;line-height:1;}
+.uploadBtn{width:68px;height:68px;border:1.5px dashed #C9CEDF;border-radius:10px;background:var(--primary-dim);color:var(--primary);display:flex;align-items:center;justify-content:center;transition:border-color .15s;}
+.uploadBtn:hover{border-color:var(--primary);}
+.modalFoot{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;}
+.difficultyPicker{display:flex;gap:8px;}
+.diffOpt{flex:1;padding:9px;text-align:center;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);font-size:12.5px;font-weight:700;color:var(--muted);}
+.diffOpt.sel.basic{border-color:var(--basic);color:var(--basic);background:rgba(15,155,142,.08);}
+.diffOpt.sel.advanced{border-color:var(--advanced);color:var(--advanced);background:rgba(217,127,20,.08);}
+.diffOpt.sel.architect{border-color:var(--architect);color:var(--architect);background:rgba(139,92,246,.08);}
+
+#toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 18px;border-radius:10px;font-size:13.5px;box-shadow:var(--shadow);z-index:100;display:flex;align-items:center;gap:10px;transform:translateY(20px);opacity:0;transition:all .25s;}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);}
+
+.profileCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px;max-width:480px;}
+.profileAvatar{width:60px;height:60px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;margin-bottom:14px;}
+
+/* Personality Development */
+.pdGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+.pdCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:border-color .15s, box-shadow .15s, transform .1s;}
+.pdCard:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px);}
+.pdIcon{width:38px;height:38px;border-radius:10px;background:var(--primary-dim);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:17px;}
+.pdCard h4{margin:0 0 6px;font-size:14.5px;}
+.pdCard p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.articleBody{font-size:14px;line-height:1.85;color:#333A4D;}
+.articleBody h4{margin:20px 0 8px;font-size:14.5px;}
+.articleBody ul{margin:6px 0 14px;padding-left:20px;}
+.articleBody li{margin-bottom:6px;}
+
+/* Admin */
+.table{width:100%;border-collapse:collapse;font-size:13px;}
+.table th{text-align:left;color:var(--muted);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--line);}
+.table td{padding:12px 12px;border-bottom:1px solid var(--line);}
+.table tr:hover td{background:var(--panel-2);}
+.statusPill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;}
+.statusPill.pending{background:#FFF3D6;color:#8A5B00;}
+.statusPill.approved{background:rgba(15,155,142,.12);color:var(--teal);}
+.statusPill.rejected{background:rgba(220,76,100,.12);color:var(--red);}
+.miniAvatar{width:28px;height:28px;border-radius:50%;background:var(--primary-dim);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11.5px;}
+.tabRow{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tabRow .btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.kpiRow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpiCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+.kpiCard .num{font-family:'Sora',sans-serif;font-size:22px;font-weight:700;}
+.kpiCard .lbl{font-size:12px;color:var(--muted);font-weight:600;}
+
+.storageBlock{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:24px;}
+.storageRow{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+.storageBar{height:10px;border-radius:6px;background:var(--panel-2);overflow:hidden;margin-bottom:16px;}
+.storageBar > div{height:100%;background:linear-gradient(90deg, var(--primary), var(--teal));}
+.storageNote{font-size:12px;color:var(--muted);line-height:1.6;}
+.sysGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.sysCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;}
+.sysCard h4{margin:0 0 10px;font-size:14px;color:var(--primary);}
+.sysCard ul{margin:0;padding-left:18px;font-size:13px;color:var(--text);line-height:1.8;}
+.sysCard ul li b{color:var(--text);}
+.faqItem{border-top:1px solid var(--line);padding:12px 0;}
+.faqQ{font-weight:700;font-size:13.8px;margin-bottom:4px;}
+.faqA{font-size:13.3px;color:var(--muted);line-height:1.6;}
+.answerToolbar{display:flex;gap:6px;margin-top:8px;}
+.answerToolbar button{background:var(--panel-2);border:1px solid var(--line);color:var(--primary);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.answerToolbar button:hover{border-color:var(--primary);}
+.inlineImgWrap{margin:10px 0;}
+.inlineImgWrap img{max-width:280px;max-height:170px;border-radius:10px;border:1px solid var(--line);display:block;}
+.navGroupToggle{display:flex;}
+.groupChevron{transition:transform .2s;font-size:11px;}
+.navGroupBody{overflow:hidden;max-height:0;transition:max-height .25s ease;}
+.navGroupBody.open{max-height:600px;}
+.navGroupBody.nested{padding-left:8px;}
+.navItem.sub{padding-left:18px;font-size:13px;}
+.navItem.subsub{padding-left:30px;font-size:12.5px;}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-bottom:8px;flex-wrap:wrap;}
+.breadcrumb b{color:var(--text);font-weight:700;}
+.breadcrumb .sep{opacity:.5;}
+.fadeIn{animation:fadeInUp .28s ease;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.imgIcon{background:var(--primary-dim);border:1px solid var(--line);color:var(--primary);width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:6px;transition:background .15s;}
+.imgIcon:hover{background:var(--primary);color:#fff;}
+.lightbox{position:fixed;inset:0;background:rgba(20,24,16,0.72);display:flex;align-items:center;justify-content:center;z-index:200;padding:30px;}
+.lightbox img{max-width:min(600px,90vw);max-height:80vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.lightbox .lbClose{position:absolute;top:22px;right:26px;background:rgba(255,255,255,0.15);color:#fff;border:none;width:36px;height:36px;border-radius:50%;font-size:16px;}
+/* Quiz engine */
+.quizProgressBar{height:8px;background:var(--panel-2);border-radius:6px;overflow:hidden;margin-bottom:14px;}
+.quizProgressBar > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--teal));transition:width .3s ease;}
+.quizTopRow{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.quizCard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow);animation:fadeInUp .25s ease;}
+.quizQNum{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px;}
+.quizQText{font-size:16px;font-weight:700;margin-bottom:18px;line-height:1.5;}
+.quizOption{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid var(--line);border-radius:11px;margin-bottom:10px;cursor:pointer;transition:border-color .15s, background .15s, transform .1s;font-size:13.8px;}
+.quizOption:hover{border-color:var(--primary);transform:translateX(2px);}
+.quizOption.selected{border-color:var(--primary);background:var(--primary-dim);font-weight:700;}
+.quizOption.correct{border-color:var(--basic);background:rgba(76,133,119,.1);font-weight:700;}
+.quizOption.incorrect{border-color:var(--red);background:rgba(181,73,90,.1);font-weight:700;}
+.quizOptLetter{width:26px;height:26px;border-radius:50%;background:var(--panel-2);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.quizNavRow{display:flex;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap;gap:10px;}
+.quizDots{display:flex;gap:5px;flex-wrap:wrap;max-width:340px;}
+.quizDot{width:9px;height:9px;border-radius:50%;background:var(--line);}
+.quizDot.answered{background:var(--primary);}
+.quizDot.current{outline:2px solid var(--primary);outline-offset:2px;}
+.resultHero{background:linear-gradient(135deg,var(--primary),var(--teal));color:#fff;border-radius:16px;padding:30px;margin-bottom:22px;text-align:center;}
+.resultHero .bigScore{font-family:'Sora',sans-serif;font-size:44px;font-weight:800;}
+.resultHero .scoreLbl{font-size:13.5px;opacity:.9;}
+.bookmarkStar{background:none;border:none;color:var(--line);font-size:15px;padding:0 4px;flex-shrink:0;transition:color .15s, transform .15s;}
+.bookmarkStar.active{color:var(--amber);}
+.bookmarkStar:hover{transform:scale(1.2);}
+.settingsCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;max-width:560px;}
+.settingRow{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+.settingRow:last-child{border-bottom:none;}
+.settingRow strong{font-size:13.5px;display:block;}
+.settingRow span{font-size:12px;color:var(--muted);}
+.switch{position:relative;width:42px;height:24px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;}
+.switchTrack{position:absolute;inset:0;background:var(--line);border-radius:20px;cursor:pointer;transition:background .2s;}
+.switchTrack::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.switch input:checked + .switchTrack{background:var(--primary);}
+.switch input:checked + .switchTrack::before{transform:translateX(18px);}
+.btn, .navItem, .statCard, .pdCard, .iconBtn{transition:all .15s ease;}
+.btn:active{transform:scale(0.97);}
+.navItem:hover{transform:translateX(2px);}
+.qCard{animation:fadeInUp .22s ease;}
+
+/* Tutorials */
+.tutTrackLayout{display:grid;grid-template-columns:250px 1fr;gap:20px;align-items:start;}
+.tutChapterList{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;position:sticky;top:20px;max-height:calc(100vh - 60px);overflow-y:auto;}
+.tutChapterHead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:6px 8px 10px;}
+.tutChapterItem{display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:8px;font-size:13px;cursor:pointer;color:var(--text);}
+.tutChapterItem:hover{background:var(--panel-2);}
+.tutChapterItem.active{background:var(--primary-dim);color:var(--primary);font-weight:700;}
+.tutChapterItem .doneDot{width:8px;height:8px;border-radius:50%;background:var(--line);flex-shrink:0;}
+.tutChapterItem .doneDot.done{background:var(--basic);}
+.tutTrackMain, .tutLessonMain{min-width:0;}
+.tutProgressWrap{margin-bottom:18px;}
+.tutTrackHero{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;}
+.lessonCard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow);animation:fadeInUp .25s ease;}
+.lessonMeta{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.lessonTitle{font-size:20px;font-weight:700;margin-bottom:6px;}
+.lessonAnalogy{background:var(--primary-dim);border-left:3px solid var(--primary);border-radius:0 10px 10px 0;padding:12px 16px;margin:14px 0;font-size:13.5px;font-style:italic;color:#3A4A2B;}
+.lessonSectionLbl{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--primary);margin:20px 0 8px;}
+.lessonBody ul{margin:6px 0;padding-left:20px;}
+.lessonBody li{margin-bottom:6px;font-size:13.8px;line-height:1.6;}
+.lessonBody p{font-size:13.8px;line-height:1.75;margin:6px 0;}
+.lessonNavRow{display:flex;justify-content:space-between;align-items:center;margin-top:24px;flex-wrap:wrap;gap:10px;}
+.readTimeChip{background:var(--panel-2);border-radius:20px;padding:3px 10px;font-family:'JetBrains Mono',monospace;}
+.tutProgressBar{height:8px;background:var(--panel-2);border-radius:6px;overflow:hidden;}
+.tutProgressBar > div{height:100%;background:linear-gradient(90deg,var(--primary),var(--teal));transition:width .3s ease;}
+.markDoneBtn.done{background:var(--basic);color:#fff;border:none;}
+
+/* Dashboard accordion for tech sections */
+.accordionCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;}
+.accordionHead{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;}
+.accordionHead:hover{background:var(--panel-2);}
+.accordionTitleRow{display:flex;align-items:center;gap:12px;}
+.accordionChevron{transition:transform .25s ease;color:var(--muted);}
+.accordionCard.expanded .accordionChevron{transform:rotate(180deg);}
+.accordionBody{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.accordionCard.expanded .accordionBody{max-height:600px;}
+.accordionInner{padding:0 18px 18px;border-top:1px solid var(--line);padding-top:14px;}
+@media (max-width:900px){ .tutTrackLayout{grid-template-columns:1fr;} .tutChapterList{position:static;max-height:none;} }
+.menuToggle{display:none;background:var(--panel);border:1px solid var(--line);color:var(--text);width:38px;height:38px;border-radius:9px;font-size:16px;}
+@media (max-width: 980px){ .statGrid{grid-template-columns:repeat(3,1fr);} .kpiRow{grid-template-columns:repeat(2,1fr);} }
+@media (max-width: 900px){ .authWrap{grid-template-columns:1fr;} .authBrand{display:none;} }
+@media (max-width: 760px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{position:fixed;left:-280px;width:250px;z-index:60;transition:left .2s;box-shadow:20px 0 40px rgba(0,0,0,.15);}
+  .sidebar.openMobile{left:0;}
+  .menuToggle{display:block;}
+  .main{padding:18px;}
+  .statGrid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:520px){ .statGrid{grid-template-columns:1fr;} .authFormSide{padding:32px 22px;} .kpiRow{grid-template-columns:1fr;} .sysGrid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="authScreen">
+  <div class="authWrap">
+    <div class="authBrand">
+      <div class="brandLogo"><div class="brandMark">Ab</div><div class="brandName">AbTechie</div></div>
+      <div class="authTagline">
+        <h1>Interview prep &amp; career growth, all in one place.</h1>
+        <p>Build a question bank across Salesforce, Azure DevOps, Git, Copado and Gearset — plus grow the soft skills that get offers over the line.</p>
+        <div class="techPills"><span class="techPill">SFDC</span><span class="techPill">AZDO</span><span class="techPill">GIT</span><span class="techPill">CPDO</span><span class="techPill">GSET</span></div>
+      </div>
+      <div class="authNote mono">v2.0 · local demo build</div>
+    </div>
+    <div class="authFormSide">
+      <div class="authTabs">
+        <button class="authTab active" id="tabLogin" onclick="switchAuthTab('login')">Log in</button>
+        <button class="authTab" id="tabSignup" onclick="switchAuthTab('signup')">Sign up</button>
+      </div>
+
+      <div id="authMsgArea"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@company.com" required></div>
+        <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" required></div>
+        <div class="rowBetween">
+          <label><input type="checkbox" id="rememberMe" checked> Remember me</label>
+          <button type="button" class="linkBtn" onclick="showToast('Password reset link sent (demo)')">Forgot password?</button>
+        </div>
+        <button class="primaryBtn" type="submit">Log in</button>
+      </form>
+
+      <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
+        <div class="field"><label>Full name</label><input type="text" id="signupName" placeholder="Alex Morgan" required></div>
+        <div class="field"><label>Email</label><input type="email" id="signupEmail" placeholder="you@company.com" required></div>
+        <div class="field"><label>Password</label><input type="password" id="signupPassword" placeholder="Min. 8 characters" required minlength="6"></div>
+        <div class="rowBetween"><label><input type="checkbox" checked disabled> Send email verification (optional)</label></div>
+        <button class="primaryBtn" type="submit">Create account</button>
+      </form>
+
+      <div class="authSwitchNote" id="authSwitchNote">New to AbTechie? <button class="linkBtn" onclick="switchAuthTab('signup')">Create an account</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brandLogo"><div class="brandMark">Ab</div><div class="brandName">AbTechie</div></div>
+
+      <div class="navSection" id="navUserSection">
+        <div class="navLabel">Overview</div>
+        <button class="navItem" data-view="dashboard" onclick="goView('dashboard')"><span>&#9635;</span> Dashboard</button>
+        <button class="navItem" data-view="personality" onclick="goView('personality')" id="navPdItem"><span>&#9733;</span> Personality Development</button>
+        <button class="navItem" data-view="quiz-picker" onclick="goView('quiz-picker')"><span>&#128221;</span> Practice Quiz</button>
+        <button class="navItem" data-view="tutorials-home" onclick="goView('tutorials-home')"><span>&#127891;</span> Tutorials</button>
+        <button class="navItem" data-view="bookmarks" onclick="goView('bookmarks')"><span>&#128278;</span> Bookmarks</button>
+      </div>
+
+      <div class="navSection" id="navTechSection">
+        <div class="navLabel">Technologies</div>
+        <div id="techNav"></div>
+      </div>
+
+      <div class="navSection hidden" id="navAdminSection">
+        <div class="navLabel">Admin</div>
+        <button class="navItem navGroupToggle" onclick="toggleAdminGroup()">
+          <span>&#9881;</span> Admin Panel
+          <span class="groupChevron" id="adminGroupChevron" style="margin-left:auto;">&#9662;</span>
+        </button>
+        <div id="adminGroupBody" class="navGroupBody">
+          <button class="navItem sub" data-view="admin-dashboard" onclick="goView('admin-dashboard')"><span>&#128202;</span> Admin Dashboard</button>
+          <button class="navItem sub" data-view="admin-users" onclick="goView('admin-users')"><span>&#128101;</span> Users &amp; Approvals</button>
+          <button class="navItem sub navGroupToggle" onclick="toggleContentGroup(event)">
+            <span>&#128196;</span> Content Manager
+            <span class="groupChevron" id="contentGroupChevron" style="margin-left:auto;">&#9662;</span>
+          </button>
+          <div id="contentGroupBody" class="navGroupBody nested">
+            <div id="adminTechNavList"></div>
+          </div>
+          <button class="navItem sub" data-view="admin-system" onclick="goView('admin-system')"><span>&#8505;</span> About System</button>
+          <button class="navItem sub" data-view="admin-settings" onclick="goView('admin-settings')"><span>&#9874;</span> System Settings</button>
+        </div>
+      </div>
+
+      <div class="navSection">
+        <div class="navLabel">Account</div>
+        <button class="navItem" data-view="profile" onclick="goView('profile')"><span>&#9782;</span> Profile</button>
+      </div>
+
+      <div class="sidebarFoot">
+        <div class="userChip">
+          <div class="userAvatar" id="sideAvatar">A</div>
+          <div><div id="sideName" style="font-size:13px;font-weight:700;">—</div><small id="sideEmail">—</small></div>
+        </div>
+        <button class="logoutBtn" onclick="handleLogout()">Log out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('openMobile')">&#9776;</button>
+          <div>
+            <div class="breadcrumb" id="breadcrumbBar"></div>
+            <h1 class="pageTitle" id="pageTitle">Dashboard</h1>
+            <div class="pageSub" id="pageSub">Your interview prep at a glance</div>
+          </div>
+        </div>
+        <div class="headerRight" id="headerActions"></div>
+      </div>
+
+      <div id="view-dashboard">
+        <div class="statGrid" id="statGrid"></div>
+        <div class="sectionTitle" id="recentTitle" style="display:none;">Recently viewed</div>
+        <div class="qList" id="recentList" style="margin-bottom:10px;"></div>
+        <div class="sectionTitle" id="recoTitle" style="display:none;">Recommended for you</div>
+        <div style="color:var(--muted);font-size:13.5px;margin-bottom:20px;" id="recoText"></div>
+        <div class="sectionTitle">Quick tips</div>
+        <div style="color:var(--muted);font-size:13.5px;line-height:1.7;">
+          Drag the handle on any question to reorder it, use the sort dropdown for random or custom order, click a question to expand its answer, star it to bookmark, and try the Practice Quiz to test yourself. Don't miss the Personality Development section for soft-skills growth alongside your technical prep.
+        </div>
+      </div>
+
+      <div id="view-category" class="hidden">
+        <div class="toolbar">
+          <div class="searchBox"><span class="mono" style="color:var(--muted);">&#8981;</span><input type="text" id="searchInput" placeholder="Search questions..." oninput="renderQuestions()"></div>
+          <select class="selectBox" id="filterDifficulty" onchange="renderQuestions()">
+            <option value="all">All levels</option><option value="basic">Basic</option><option value="advanced">Advanced</option><option value="architect">Architect</option>
+          </select>
+          <select class="selectBox" id="sortMode" onchange="handleSortChange()">
+            <option value="custom">Custom order</option><option value="az">A–Z</option><option value="difficulty">By difficulty</option><option value="random">Random shuffle</option>
+          </select>
+          <button class="btn primary" onclick="openQuestionModal()">+ Add question</button>
+        </div>
+        <div class="qList" id="qList"></div>
+      </div>
+
+      <div id="view-personality" class="hidden">
+        <div class="toolbar">
+          <div class="searchBox"><span class="mono" style="color:var(--muted);">&#8981;</span><input type="text" id="pdSearch" placeholder="Search topics..." oninput="renderPersonality()"></div>
+        </div>
+        <div class="pdGrid" id="pdGrid"></div>
+      </div>
+
+      <div id="view-profile" class="hidden">
+        <div class="profileCard">
+          <div class="profileAvatar" id="profAvatar">A</div>
+          <div class="field"><label>Full name</label><input type="text" id="profName"></div>
+          <div class="field"><label>Email</label><input type="email" id="profEmail"></div>
+          <div class="field"><label>New password</label><input type="password" placeholder="Leave blank to keep current"></div>
+          <button class="btn primary" onclick="saveProfile()">Save changes</button>
+        </div>
+      </div>
+
+      <!-- ADMIN: USERS -->
+      <div id="view-admin-users" class="hidden">
+        <div class="toolbar">
+          <div class="searchBox"><span class="mono" style="color:var(--muted);">&#8981;</span><input type="text" id="userSearch" placeholder="Search users..." oninput="renderAdminUsers()"></div>
+          <select class="selectBox" id="userStatusFilter" onchange="renderAdminUsers()">
+            <option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <table class="table">
+          <thead><tr><th>User</th><th>Status</th><th>Registered</th><th>Last login</th><th>Logins</th><th>Actions</th></tr></thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ADMIN: CONTENT -->
+      <div id="view-admin-content" class="hidden">
+        <div class="tabRow" id="adminTechTabs"></div>
+        <div class="toolbar">
+          <div class="searchBox"><span class="mono" style="color:var(--muted);">&#8981;</span><input type="text" id="adminSearch" placeholder="Search questions..." oninput="renderAdminContent()"></div>
+          <button class="btn primary" onclick="openQuestionModal(null, adminTech)">+ Add question</button>
+        </div>
+        <div class="qList" id="adminQList"></div>
+      </div>
+
+      <!-- ADMIN: DASHBOARD -->
+      <div id="view-admin-dashboard" class="hidden">
+        <div class="kpiRow" id="adminKpiRow"></div>
+
+        <div class="sectionTitle">System health &amp; performance</div>
+        <div class="kpiRow" id="healthRow"></div>
+
+        <div class="sectionTitle">Storage &amp; database utilization</div>
+        <div class="storageBlock" id="storageBlock"></div>
+
+        <div class="sectionTitle">Questions per technology</div>
+        <table class="table">
+          <thead><tr><th>Technology</th><th>Basic</th><th>Advanced</th><th>Architect</th><th>Total</th><th>Images uploaded</th></tr></thead>
+          <tbody id="techStatsBody"></tbody>
+        </table>
+
+        <div class="sectionTitle">Login history &amp; activity log</div>
+        <table class="table">
+          <thead><tr><th>User</th><th>Event</th><th>Timestamp</th></tr></thead>
+          <tbody id="activityLogBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ADMIN: ABOUT SYSTEM -->
+      <div id="view-admin-system" class="hidden">
+        <div class="sysGrid" id="sysGrid"></div>
+      </div>
+
+      <!-- QUIZ PICKER -->
+      <div id="view-quiz-picker" class="hidden">
+        <p style="color:var(--muted);font-size:13.5px;margin-bottom:18px;">Pick a technology to start a randomized practice quiz, mixing Basic, Advanced and Architect level questions from the question bank.</p>
+        <div class="statGrid" id="quizPickerGrid"></div>
+      </div>
+
+      <!-- QUIZ SESSION -->
+      <div id="view-quiz-session" class="hidden">
+        <div class="quizProgressBar"><div id="quizProgressFill" style="width:0%;"></div></div>
+        <div class="quizTopRow">
+          <span class="mono" id="quizProgressLabel" style="color:var(--muted);font-size:12.5px;">Question 1 of 20</span>
+          <button class="btn danger" onclick="exitQuiz()">Exit quiz</button>
+        </div>
+        <div class="quizCard" id="quizCardArea"></div>
+        <div class="quizNavRow">
+          <button class="btn" id="quizPrevBtn" onclick="quizNav(-1)">&#8592; Previous</button>
+          <div class="quizDots" id="quizDots"></div>
+          <button class="btn primary" id="quizNextBtn" onclick="quizNav(1)">Next &#8594;</button>
+        </div>
+      </div>
+
+      <!-- QUIZ RESULTS -->
+      <div id="view-quiz-results" class="hidden">
+        <div class="resultHero" id="resultHero"></div>
+        <div class="kpiRow" id="resultKpiRow"></div>
+        <div class="sectionTitle">Difficulty-wise analysis</div>
+        <table class="table"><thead><tr><th>Difficulty</th><th>Attempted</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody id="resultDiffBody"></tbody></table>
+        <div class="sectionTitle">Answer review &amp; explanations</div>
+        <div class="qList" id="resultReviewList"></div>
+        <div style="margin-top:20px;"><button class="btn primary" onclick="goView('quiz-picker')">Take another quiz</button></div>
+      </div>
+
+      <!-- TUTORIALS HOME -->
+      <div id="view-tutorials-home" class="hidden">
+        <div class="toolbar">
+          <div class="searchBox"><span class="mono" style="color:var(--muted);">&#8981;</span><input type="text" id="tutSearch" placeholder="Search tutorials and lessons..." oninput="renderTutorialsHome()"></div>
+        </div>
+        <div class="sectionTitle" id="tutContinueTitle" style="display:none;">Continue learning</div>
+        <div class="statGrid" id="tutContinueGrid" style="margin-bottom:6px;"></div>
+        <div class="sectionTitle">Tutorial tracks</div>
+        <div class="statGrid" id="tutTrackGrid"></div>
+      </div>
+
+      <!-- TUTORIALS TRACK (chapter list) -->
+      <div id="view-tutorials-track" class="hidden">
+        <div class="tutTrackLayout">
+          <div class="tutChapterList" id="tutChapterList"></div>
+          <div class="tutTrackMain" id="tutTrackMain"></div>
+        </div>
+      </div>
+
+      <!-- TUTORIALS LESSON -->
+      <div id="view-tutorials-lesson" class="hidden">
+        <div class="tutTrackLayout">
+          <div class="tutChapterList" id="tutLessonSidebar"></div>
+          <div class="tutLessonMain" id="tutLessonMain"></div>
+        </div>
+      </div>
+
+      <!-- BOOKMARKS -->
+      <div id="view-bookmarks" class="hidden">
+        <div class="qList" id="bookmarksList"></div>
+      </div>
+
+      <!-- ADMIN SETTINGS -->
+      <div id="view-admin-settings" class="hidden">
+        <div class="settingsCard" id="settingsCard"></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- QUESTION MODAL -->
+<div class="overlay hidden" id="qModalOverlay">
+  <div class="modal">
+    <div class="modalHead"><h3 id="qModalTitle">Add question</h3><button class="closeX" onclick="closeQuestionModal()">&#10005;</button></div>
+    <div class="field"><label>Difficulty level</label><div class="difficultyPicker" id="difficultyPicker"></div></div>
+    <div class="field">
+      <label>Question <span class="mono" style="color:var(--muted);">(max 1,000 words)</span></label>
+      <textarea id="qInput" rows="3" oninput="updateCount('qInput','qCount',1000)" placeholder="e.g. What is the difference between a Managed and Unmanaged package in Salesforce?"></textarea>
+      <div class="charCount" id="qCount">0 / 1000 words</div>
+    </div>
+    <div class="field">
+      <label>Answer <span class="mono" style="color:var(--muted);">(max 5,000 words)</span></label>
+      <textarea id="aInput" rows="6" oninput="updateCount('aInput','aCount',5000)" placeholder="Write a detailed answer... use the image icon below to insert a diagram at your cursor position."></textarea>
+      <div class="charCount" id="aCount">0 / 5000 words</div>
+      <div class="answerToolbar">
+        <button type="button" title="Insert image at cursor" onclick="document.getElementById('imgFileInput').click()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg>
+        </button>
+        <input type="file" id="imgFileInput" accept="image/*" multiple class="hidden" onchange="handleImageUpload(event)">
+        <span style="font-size:11.5px;color:var(--muted);align-self:center;">Insert image at cursor — appears inline in the answer</span>
+      </div>
+      <div class="imgUploadBlock">
+        <div class="imgUploadLabel">Attached images (preview, reorder by re-inserting, or remove)</div>
+        <div class="imgUploadRow" id="imgUploadRow"></div>
+      </div>
+    </div>
+    <div class="modalFoot"><button class="btn" onclick="closeQuestionModal()">Cancel</button><button class="btn primary" onclick="saveQuestion()">Save question</button></div>
+  </div>
+</div>
+
+<!-- ARTICLE MODAL -->
+<div class="overlay hidden" id="articleOverlay">
+  <div class="modal wide">
+    <div class="modalHead"><h3 id="articleTitle">Topic</h3><button class="closeX" onclick="closeArticle()">&#10005;</button></div>
+    <div class="articleBody" id="articleBody"></div>
+  </div>
+</div>
+
+<!-- USER PROFILE VIEW MODAL (admin) -->
+<div class="overlay hidden" id="userViewOverlay">
+  <div class="modal">
+    <div class="modalHead"><h3>User profile</h3><button class="closeX" onclick="document.getElementById('userViewOverlay').classList.add('hidden')">&#10005;</button></div>
+    <div id="userViewBody"></div>
+  </div>
+</div>
+
+<div class="lightbox hidden" id="lightboxOverlay" onclick="if(event.target===this)closeLightbox()">
+  <button class="lbClose" onclick="closeLightbox()">&#10005;</button>
+  <img id="lightboxImg" src="" alt="Answer diagram preview">
+</div>
+
+<div id="toast"><span class="dot"></span><span id="toastMsg"></span></div>
+
+<script>
+/* ============ ADMIN CREDENTIALS (backend-managed; never rendered in UI) ============ */
+const _AK = "abdultechie5519@gmail.com";
+const _AS = "Abdul@123";
+
+const TECHS = [
+  {id:'salesforce', name:'Salesforce', short:'SFDC', color:'#00A1E0'},
+  {id:'azuredevops', name:'Azure DevOps', short:'AZDO', color:'#0078D4'},
+  {id:'git', name:'Git', short:'GIT', color:'#F05033'},
+  {id:'copado', name:'Copado', short:'CPDO', color:'#7B4CE0'},
+  {id:'gearset', name:'Gearset', short:'GSET', color:'#D97F14'},
+];
+
+let currentUser = null;
+let isAdmin = false;
+let currentTech = null;
+let adminTech = 'salesforce';
+let currentView = 'dashboard';
+let editingId = null;
+let editingTechForAdmin = null;
+let pendingImages = [];
+let openCardId = null;
+let openPdKey = null;
+
+function uid(p){ return (p||'q_') + Math.random().toString(36).slice(2,10); }
+function sampleQ(tech, difficulty, q, a){ return {id:uid(), tech, difficulty, question:q, answer:a, images:[], order:0}; }
+
+/* ============ CONTENT: 10-15 Q&A per tech ============ */
+let DB = [];
+function seedData(){
+  DB = [];
+  const S = {
+    salesforce:{
+      basic:[
+        ["What is the difference between a Sandbox and a Production org?","A Sandbox is an isolated copy of a Production org used for development, testing, and training without affecting live data. Production is the live environment used by real end users. Sandboxes come in types (Developer, Developer Pro, Partial Copy, Full) with different data/storage limits and refresh intervals."],
+        ["What is a Custom Object in Salesforce?","A Custom Object is a database table you create to store information specific to your organization, not covered by standard objects like Account or Contact. It automatically gets a tab, fields, page layouts, and relationships, with its API name ending in '__c'."],
+        ["What is the difference between a Role and a Profile?","A Profile controls what a user can do — object and field permissions, apps, and system permissions. A Role controls what a user can see through the role hierarchy, which affects record visibility and data sharing, especially in combination with sharing rules."],
+        ["What are Validation Rules used for?","Validation Rules enforce data quality by preventing a record from being saved unless it meets a specified logical condition, showing a custom error message when the condition evaluates to true."],
+        ["What is a Report Type in Salesforce?","A Report Type defines which objects and fields are available when building a report, including the relationships between primary and related objects. Standard report types are provided automatically, while Custom Report Types let admins expose custom relationships."]
+      ],
+      advanced:[
+        ["Explain the difference between a Trigger and a Process Builder/Flow.","Triggers are Apex code that run before/after DML events and offer full programmatic control and bulk-safe patterns. Process Builder/Flow are declarative automation tools that are easier to maintain but have execution-order considerations. Best practice is one trigger per object routed through a handler class, using Flow for simpler declarative logic."],
+        ["What are Governor Limits and how do you design around them?","Governor Limits are runtime limits Salesforce enforces on Apex (SOQL queries, DML rows, CPU time, heap size) to ensure fairness in a multi-tenant environment. You design around them by bulkifying code, avoiding SOQL/DML inside loops, and using asynchronous Apex (Queueable, Batch, Future) for large-volume operations."],
+        ["What is the difference between 'with sharing' and 'without sharing' in Apex?","'with sharing' enforces the running user's record-level sharing rules on the code inside the class, while 'without sharing' runs in system context and ignores sharing rules. Choosing the right keyword prevents both unintended data exposure and unintended access restriction."],
+        ["How does the Salesforce Order of Execution work when a record is saved?","When a record is saved, Salesforce runs system validation, before triggers, custom validation rules, after triggers, assignment rules, auto-response rules, workflow rules, escalation rules, and then commits to the database before firing post-commit logic like Flows and asynchronous Apex — understanding this order is critical to debugging recursive or conflicting automation."],
+        ["What is the difference between SOQL and SOSL?","SOQL (Salesforce Object Query Language) queries records from a single object and its relationships and is used when you know which object to search. SOSL (Salesforce Object Search Language) searches text across multiple objects and fields simultaneously and is used for global keyword search."]
+      ],
+      architect:[
+        ["How would you design a multi-org Salesforce architecture for a global enterprise?","A multi-org architecture typically separates orgs by business unit, region, or compliance boundary, integrated via platform events, MuleSoft, or point-to-point APIs. Key decisions include a canonical data model, a system of record for shared entities like Account/Contact, and governance for release management across orgs, weighed against a single-org design using record types and sharing rules."],
+        ["How do you design a scalable sharing and security model for millions of records?","A scalable model favors role hierarchy and criteria-based or ownership-based sharing rules over manual sharing wherever possible, minimizes use of Apex-managed sharing for high-volume objects, and uses Public Groups instead of individual sharing to reduce sharing recalculation overhead. Architects also plan for sharing recalculation jobs during large data migrations."],
+        ["How would you architect a large-scale data migration into Salesforce?","A large migration is planned in phases: data profiling and cleansing, defining a field mapping and de-duplication strategy, staging data outside Salesforce, and loading in dependency order (parent before child) using bulk API with appropriately sized batches. Architects also plan for governor-limit-safe automation during load (often disabling triggers temporarily) and a reconciliation/validation step post-load."]
+      ]
+    },
+    azuredevops:{
+      basic:[
+        ["What is Azure DevOps and what are its main services?","Azure DevOps is a Microsoft SaaS platform for planning, developing, and delivering software. Its core services are Boards (work tracking), Repos (Git repositories), Pipelines (CI/CD), Test Plans (testing), and Artifacts (package management)."],
+        ["What is the difference between a Build pipeline and a Release pipeline?","A Build pipeline (CI) compiles code, runs unit tests, and produces artifacts on every code change. A Release pipeline (CD) takes those artifacts and deploys them across environments like Dev, QA, and Production, often with approvals and gates between stages."],
+        ["What is a Work Item in Azure Boards?","A Work Item tracks a unit of work such as a User Story, Task, Bug, or Feature. Work items can be linked to each other and to commits or pull requests, giving full traceability from requirement to deployed code."],
+        ["What is an Agent Pool in Azure Pipelines?","An Agent Pool is a group of build/release agents (Microsoft-hosted or self-hosted) that execute pipeline jobs. Pools let teams allocate specific hardware or software configurations to particular pipelines."],
+        ["What is the purpose of a Service Connection in Azure DevOps?","A Service Connection securely stores credentials and endpoint details needed for a pipeline to communicate with external services like Azure subscriptions, Docker registries, or third-party APIs, without embedding secrets in pipeline code."]
+      ],
+      advanced:[
+        ["How do YAML pipelines differ from Classic pipelines in Azure DevOps?","YAML pipelines define build and release steps as code stored in the repository, enabling version control, code review, and reuse via templates. Classic pipelines use a GUI-based designer that isn't version-controlled the same way. YAML is the recommended approach for maintainability and multi-stage CI/CD in one file."],
+        ["Explain how you would set up branch policies and environments with approvals.","Branch policies enforce rules like required reviewers, passing builds, and linked work items before a PR merges into a protected branch. Environments represent deployment targets (Dev/QA/Prod) and can have approval checks, gates, and pre/post-deployment conditions controlling who can deploy and when."],
+        ["What are pipeline templates and why are they useful?","Pipeline templates let you define reusable YAML steps, jobs, or stages in a separate file that other pipelines can reference. This reduces duplication across microservices, enforces consistent build/deploy standards, and centralizes updates to shared logic."],
+        ["How do variable groups and Key Vault integration work together?","Variable groups store shared configuration values across multiple pipelines, and can be linked to an Azure Key Vault to pull secrets at runtime instead of storing them in plain text, improving security and centralizing secret rotation."],
+        ["What is the difference between a Gate and an Approval in a Release pipeline?","An Approval requires a human to manually sign off before deployment proceeds to a stage. A Gate is an automated check (e.g., querying an Azure Monitor alert or a REST API) that must pass before the release continues, without requiring manual intervention."]
+      ],
+      architect:[
+        ["How would you architect CI/CD for a microservices platform using Azure DevOps?","A microservices CI/CD architecture typically uses one pipeline per service with shared YAML templates for common steps, container builds pushed to Azure Container Registry, and progressive deployment (canary/blue-green) via AKS or App Service slots. Governance includes centralized variable groups, Key Vault-backed service connections, and policy-as-code for compliance gates."],
+        ["How would you design a branching and release strategy for multiple teams sharing one Azure DevOps organization?","Architects typically define a project structure per product line, standardized branch policies enforced org-wide, and shared pipeline templates in a central repository. Release trains are coordinated via environment checks and a change management process, balancing team autonomy with organization-wide consistency and auditability."],
+        ["How would you design disaster recovery and auditability for an Azure DevOps-based delivery pipeline?","Disaster recovery planning includes exporting/backing up pipeline definitions as YAML in source control, replicating critical service connections and variable groups documentation, and defining a recovery runbook for agent pools. Auditability comes from enabling detailed pipeline logs, branch policy enforcement, and integrating with Azure Monitor/Log Analytics for compliance reporting."]
+      ]
+    },
+    git:{
+      basic:[
+        ["What is the difference between git merge and git rebase?","git merge combines two branch histories by creating a new merge commit, preserving full history. git rebase re-applies your commits on top of another branch, producing a linear history. Merge is safer for shared branches; rebase is often preferred for cleaning up local feature branches."],
+        ["What does git stash do?","git stash temporarily shelves uncommitted changes so you can switch branches or pull updates with a clean working directory, then reapply them later with git stash pop or git stash apply."],
+        ["What is the difference between git fetch and git pull?","git fetch downloads new commits and refs from a remote without merging them into your current branch. git pull performs a fetch followed by an automatic merge (or rebase) into your current branch."],
+        ["What is a .gitignore file used for?","A .gitignore file lists patterns for files and folders that Git should not track, such as build artifacts, dependency folders, or environment files, keeping the repository clean and avoiding accidental commits of sensitive or generated files."],
+        ["What is the difference between git clone and git fork?","git clone creates a local copy of a remote repository on your machine. A fork is a server-side (e.g., GitHub) copy of someone else's repository under your own account, typically used to propose changes back via a pull request without direct write access to the original repo."]
+      ],
+      advanced:[
+        ["How does git cherry-pick work and when would you use it?","git cherry-pick applies the changes from a specific commit onto your current branch without merging the entire branch. It's useful for backporting a hotfix from main into a release branch or selectively pulling one commit from a feature branch."],
+        ["Explain the difference between git reset --soft, --mixed, and --hard.","--soft moves HEAD but keeps changes staged; --mixed (default) moves HEAD and unstages changes but keeps them in the working directory; --hard moves HEAD and discards all changes in both the index and working directory, which is destructive and should be used carefully."],
+        ["What is the difference between a rebase and an interactive rebase?","A regular rebase re-applies commits on top of another base branch as-is. An interactive rebase (git rebase -i) lets you reorder, squash, edit, or drop individual commits before they're re-applied, which is useful for cleaning up commit history before a merge."],
+        ["How do you resolve a merge conflict, and what tools help?","Git marks conflicting sections in the affected files with conflict markers; you manually edit the file to keep the correct content, then stage and commit the resolution. Tools like git mergetool, VS Code's built-in merge editor, or 'git diff' help visualize and resolve conflicts faster."],
+        ["What is the purpose of git bisect?","git bisect performs a binary search through commit history to find the exact commit that introduced a bug, by repeatedly marking commits as good or bad until the offending commit is isolated."]
+      ],
+      architect:[
+        ["How would you design a branching strategy for a large team with frequent releases?","Common strategies include Git Flow (develop/feature/release/hotfix branches) for scheduled releases, GitHub Flow (main plus short-lived feature branches with PRs) for continuous deployment, and trunk-based development with feature flags for very fast-moving teams. The choice depends on release cadence, team size, and CI/CD maturity."],
+        ["How would you manage a monorepo versus multiple repositories at scale?","A monorepo simplifies cross-project atomic changes and shared tooling but requires investment in build-system tooling (e.g., sparse checkout, path-based CI triggers) to avoid slow builds. Multiple repos give teams independence and smaller CI scopes but complicate cross-repo dependency versioning and coordinated releases — the choice depends on team topology and release coupling."],
+        ["How would you design a Git workflow that supports strict compliance and audit requirements?","A compliance-oriented workflow enforces signed commits, mandatory reviewed pull requests with required status checks, protected branches disallowing force-push, and full audit logging of merges and approvals. Architects also define retention policies for history and integrate commit metadata with ticketing systems for full traceability from requirement to code change."]
+      ]
+    },
+    copado:{
+      basic:[
+        ["What is Copado used for?","Copado is a DevOps platform built for Salesforce that manages source control, CI/CD pipelines, backups, and testing on top of Salesforce metadata, using User Stories to track and promote changes between orgs."],
+        ["What is a User Story in Copado?","A User Story represents a unit of work (a feature, fix, or configuration change) that tracks metadata changes made in a source org, which are then committed to version control and promoted through the pipeline."],
+        ["What is a Copado Environment?","A Copado Environment represents a connected Salesforce org (e.g., Dev, QA, UAT, Production) within the pipeline, tracking its metadata state and its position in the promotion path."],
+        ["What is the Copado Pipeline used for?","The Copado Pipeline visually represents the flow of environments and promotion paths an org's changes travel through, from development sandboxes up to Production, defining where User Stories get promoted next."],
+        ["What is a Deployment in Copado?","A Deployment in Copado is the actual job that moves selected metadata components (via a User Story or Promotion) from one environment to another, with logs showing success, failure, or partial results."]
+      ],
+      advanced:[
+        ["How does Copado handle back-promotion and conflict resolution?","Copado tracks metadata differences between environments and supports back-promotion to sync downstream environment changes back upstream. Conflict resolution surfaces when the same metadata component has diverged between branches, requiring manual review to decide which version should be promoted."],
+        ["What is the role of Copado's Test Automation within a pipeline?","Copado's Test Automation integrates automated test runs (Apex tests, Selenium, or Robot Framework) into the promotion pipeline, gating deployments so a promotion only proceeds if required tests pass, improving release quality."],
+        ["How does Copado's Quality Gate feature work?","Quality Gates let you enforce static code analysis (e.g., PMD rule sets) and test coverage thresholds as mandatory checks before a User Story can be promoted, blocking low-quality or risky changes from advancing through the pipeline."],
+        ["What is the difference between a Promotion and a Deployment in Copado?","A Promotion is the process of moving a User Story's changes from one environment to the next stage in the pipeline. A Deployment is the underlying execution of that metadata transfer, which the Promotion triggers and tracks."],
+        ["How does Copado manage data templates alongside metadata?","Copado's Data Deployment feature (Data Template / Data Set) lets teams define and move configuration or seed data records — like Custom Metadata rows — alongside metadata, ensuring environments are functionally equivalent, not just structurally equivalent."]
+      ],
+      architect:[
+        ["How would you design a Copado pipeline for a multi-team Salesforce release train?","A release-train architecture typically uses a shared pipeline with environment-specific branches, feature branches per team merged via pull requests, and scheduled promotion windows aligned to a release calendar. Architects define governance for User Story scope, static code analysis gates, and back-promotion cadence to keep multiple teams shipping safely into shared UAT/Production orgs."],
+        ["How would you design rollback and incident-response procedures using Copado?","A robust design relies on Copado's deployment history and org snapshots/backups to identify the last known-good state, paired with a documented rollback runbook using either a reverse promotion or a restore from backup. Architects also define incident severity thresholds that trigger an expedited hotfix pipeline bypassing the normal release train."],
+        ["How would you integrate Copado with external ALM tools like Jira or ServiceNow?","Copado supports integrations that link User Stories to Jira tickets or ServiceNow change requests, syncing status bidirectionally so that promotion events update ticket status automatically. Architecting this well requires mapping status transitions carefully to avoid state drift between systems and defining a single source of truth for change approval."]
+      ]
+    },
+    gearset:{
+      basic:[
+        ["What is Gearset primarily used for?","Gearset is a DevOps and deployment tool for Salesforce that provides metadata comparison, automated deployments between orgs, CI/CD pipelines, backup and rollback, and data deployment capabilities."],
+        ["What is a Gearset comparison, and why is it useful?","A Gearset comparison shows the metadata differences between a source and target org (or Git branch) side by side, helping teams review exactly what will change before deploying, reducing the risk of unintended overwrites."],
+        ["What is a Deployment Template in Gearset?","A Deployment Template lets teams predefine and save deployment configurations — like included metadata types, validation rules, and target environments — so recurring deployments can be run consistently without reconfiguring each time."],
+        ["What does Gearset's 'Problem Analyzer' do?","Problem Analyzer scans a planned deployment for common issues before it runs, such as missing dependencies or field-level permission problems, and gives suggested fixes to reduce failed deployments."],
+        ["What is a Gearset Backup, and how often can it run?","A Gearset Backup takes automated, scheduled snapshots of an org's metadata and data, which can run as frequently as daily (or more), enabling point-in-time restore if data or configuration is lost or corrupted."]
+      ],
+      advanced:[
+        ["How does Gearset's CI/CD pipeline integrate with version control?","Gearset can connect directly to Git repositories (GitHub, GitLab, Bitbucket, Azure Repos) and automate deployments triggered by commits or pull requests, running validation-only deployments, automated tests, and promoting changes through configured environment stages without separate CI tooling."],
+        ["How does Gearset handle deployment of Salesforce data, not just metadata?","Gearset's data deployment feature lets you compare and sync record data between orgs based on configurable matching rules and field mappings, useful for keeping configuration data like Custom Metadata or Custom Settings in sync across Sandboxes and Production."],
+        ["What is the difference between a validation-only deployment and a full deployment in Gearset?","A validation-only deployment runs all checks and Apex tests against the target org without actually committing changes, useful for confidence-checking a release ahead of time. A full deployment actually applies the metadata changes to the target org after validation passes."],
+        ["How does Gearset support monitoring and compliance for Salesforce orgs?","Gearset offers continuous monitoring that alerts teams when metadata changes are made directly in a target org outside the pipeline (configuration drift), which helps enforce governance and quickly catch unauthorized or accidental changes."],
+        ["How would you set up a CI pipeline in Gearset triggered by pull requests?","You connect the Git repository, configure a pipeline stage that watches for pull requests against a target branch, and set it to automatically run a validation-only deployment with unit tests against a QA sandbox, posting the result back to the PR so reviewers see deployability before merging."]
+      ],
+      architect:[
+        ["How would you architect a rollback-safe deployment strategy using Gearset for a regulated industry client?","A rollback-safe strategy combines Gearset's automated backups before every deployment, validation-only deployment runs against Production, and a Git-based promotion pipeline with mandatory peer-reviewed pull requests. For regulated clients, architects add deployment approval gates, audit-trail retention of comparison reports, and a documented rollback runbook using point-in-time backup restore."],
+        ["How would you design a multi-team Gearset pipeline that minimizes deployment conflicts?","Architects typically assign each team a scoped feature branch and sandbox, use Gearset's continuous integration to merge and validate against a shared integration branch frequently, and rely on Problem Analyzer and comparison reports to catch metadata overlaps early, reducing large, conflict-prone merges near release time."],
+        ["How would you use Gearset to support a large-scale Salesforce org split or consolidation project?","For an org split/consolidation, Gearset's comparison and data deployment tools help migrate metadata and configuration data in dependency order between source and target orgs, while backups provide safety snapshots before each major migration step. Architects sequence the migration in waves, validating each wave with validation-only deployments before committing changes to avoid partial-state production incidents."]
+      ]
+    }
+  };
+  Object.keys(S).forEach(tech=>{
+    ['basic','advanced','architect'].forEach(level=>{
+      (S[tech][level]||[]).forEach(([q,a])=>DB.push(sampleQ(tech, level, q, a)));
+    });
+  });
+  TECHS.forEach(t=>{ DB.filter(d=>d.tech===t.id).forEach((d,i)=>d.order=i); });
+  attachDefaultDiagrams();
+  enrichAnswers();
+}
+
+/* Real-world scenario + light humor appended to every seeded answer, cycled per technology */
+const REAL_WORLD = {
+  salesforce:["On a recent healthcare CRM rollout, this exact decision determined whether a Sandbox refresh accidentally overwrote a week of QA test data.","A retail client's Salesforce team ran into this while syncing 40+ Sandboxes across regional business units before a Black Friday go-live.","During a banking implementation, an architect used this principle to keep three million Account records performant under strict sharing rules.","A nonprofit's Salesforce admin discovered this the hard way after a bulk data load silently hit governor limits during a donor migration."],
+  azuredevops:["A fintech engineering team used this exact setup to cut their release cycle from bi-weekly to daily deployments across 12 microservices.","During a retail platform migration, this approach caught a broken build before it ever reached the Production release ring.","An insurance company's DevOps lead relied on this to pass a SOC 2 audit by proving every deployment had a traceable approval chain.","A logistics company's pipeline used this pattern to safely deploy across five regional Azure subscriptions without manual intervention."],
+  git:["A mobile app team used this exact workflow to ship a critical security patch within an hour without disturbing an in-progress feature branch.","During a 40-engineer monorepo migration, this strategy is what kept merge conflicts from blocking the whole team for days.","A startup's lead engineer used this technique to find a two-week-old regression buried in over 200 commits before a client demo.","An open-source maintainer relied on this exact process to keep contributions from hundreds of contributors mergeable without chaos."],
+  copado:["A global retailer's release train used this exact mechanism to keep four regional Salesforce teams from overwriting each other's changes.","During a multi-quarter ERP-to-CRM integration, this is what caught a metadata conflict before it reached the UAT environment.","A healthcare Salesforce team relied on this Copado feature to pass an internal compliance audit ahead of a major go-live.","An insurance client used this pattern to recover cleanly after a botched weekend deployment threatened Monday-morning operations."],
+  gearset:["A financial services team used this exact Gearset feature to restore a corrupted Custom Metadata configuration within minutes, not days.","During a Salesforce org consolidation for a merged company, this comparison approach caught dozens of conflicting field definitions early.","A retail Salesforce team relies on this to validate every pull request automatically before a reviewer even opens it.","An admin at a logistics company used this backup strategy to recover gracefully after an accidental mass-delete in Production."]
+};
+const HUMOR = {
+  salesforce:["Think of it like lending your car (Sandbox) versus actually owning one (Production) — scratches in the loaner are forgivable, scratches on your own car are not.","It's the Salesforce equivalent of a group chat where everyone can see the message, but only a few people are allowed to actually reply — that's your sharing model.","Governor limits are Salesforce's way of saying 'you can have dessert, just not the whole cake' — bulkify your code and everyone eats well.","A Custom Object without proper relationships is like throwing a filing cabinet in a room with no folders — technically organized, practically chaos."],
+  azuredevops:["A Release pipeline without approvals is like handing someone the car keys before they've passed the driving test — technically possible, rarely wise.","YAML pipelines are basically a recipe card for your build — Classic pipelines are trying to remember the recipe by watching someone cook once.","Environments with approval gates are the corporate version of 'ask a parent before you leave the house.'","A Service Connection without Key Vault is like writing your Wi-Fi password on a sticky note taped to the router — it works, until it really doesn't."],
+  git:["git merge is like two people finishing each other's sentences politely — git rebase is one person rewriting the whole conversation to sound smoother.","git stash is the digital equivalent of shoving clutter in a closet right before guests arrive — perfectly fine, as long as you remember it's in there.","git bisect is basically detective work with a magnifying glass, except the culprit is always 'commit 47 from three weeks ago.'","git reset --hard is the 'are you sure?' dialog box that Git forgot to ask — use it like you're disarming something."],
+  copado:["A User Story stuck mid-pipeline is the Copado version of a package stuck 'in transit' for two weeks — everyone's just refreshing the tracking page.","Back-promotion conflicts are like two chefs seasoning the same soup from opposite ends of the kitchen without talking to each other first.","A Quality Gate blocking a risky promotion is basically a bouncer checking IDs before risky code gets into the Production club.","Skipping test automation before a promotion is like skipping the seatbelt because the drive 'is only five minutes.'"],
+  gearset:["Skipping a backup before a big deployment is like skydiving without checking the parachute because 'it was fine last time.'","A metadata comparison report is basically Gearset holding up two family photos and asking 'okay, but who added the extra person in this one?'","Problem Analyzer catching a dependency issue before deployment is the tech equivalent of a friend stopping you before you hit send on that email.","Configuration drift alerts are Gearset's way of saying 'someone touched the thermostat without asking' — and it always finds out."]
+};
+function enrichAnswers(){
+  const counters = {};
+  DB.forEach(q=>{
+    counters[q.tech] = counters[q.tech] || 0;
+    const i = counters[q.tech]++;
+    const rw = REAL_WORLD[q.tech][i % REAL_WORLD[q.tech].length];
+    const hu = HUMOR[q.tech][i % HUMOR[q.tech].length];
+    q.answer += `\n\nReal-world example: ${rw}\n\nA lighter way to remember it: ${hu}`;
+  });
+}
+
+/* Small default diagrams for flagship questions — lightweight inline SVG, optimized for fast render */
+function diagramSvg(labels, accent){
+  const boxW=90, gap=14, h=54, n=labels.length;
+  const totalW = n*boxW + (n-1)*gap + 20;
+  const boxes = labels.map((l,i)=>{
+    const x = 10 + i*(boxW+gap);
+    const arrow = i<n-1 ? `<path d="M${x+boxW+2},${h/2+10} L${x+boxW+gap-2},${h/2+10}" stroke="${accent}" stroke-width="2" marker-end="url(#arrow)"/>` : '';
+    return `<rect x="${x}" y="10" width="${boxW}" height="${h}" rx="8" fill="#fff" stroke="${accent}" stroke-width="1.6"/>
+      <text x="${x+boxW/2}" y="${h/2+16}" font-size="10" font-family="Plus Jakarta Sans, sans-serif" fill="#26301F" text-anchor="middle">${l}</text>${arrow}`;
+  }).join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="80" viewBox="0 0 ${totalW} 80">
+    <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="${accent}"/></marker></defs>
+    <rect width="100%" height="100%" fill="#F6F7F1"/>${boxes}</svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+function attachDefaultDiagrams(){
+  const diagrams = [
+    {tech:'salesforce', match:'multi-org Salesforce architecture', img:diagramSvg(['Region Org A','Integration Layer','Region Org B'], '#5B7B3B')},
+    {tech:'azuredevops', match:'CI/CD for a microservices platform', img:diagramSvg(['Commit','Build','Test','Release','Deploy'], '#4C8577')},
+    {tech:'git', match:'branching strategy for a large team', img:diagramSvg(['main','release','feature','hotfix'], '#B5842A')},
+    {tech:'copado', match:'multi-team Salesforce release train', img:diagramSvg(['Dev','QA','UAT','Prod'], '#7A6BAE')},
+    {tech:'gearset', match:'rollback-safe deployment strategy', img:diagramSvg(['Backup','Compare','Validate','Deploy'], '#5B7B3B')},
+  ];
+  diagrams.forEach(d=>{
+    const item = DB.find(q=>q.tech===d.tech && q.question.includes(d.match));
+    if(item){ item.images=[d.img]; item.answer = item.answer + `\n[[img:0]]`; }
+  });
+}
+seedData();
+
+/* ============ TUTORIALS DATA MODEL ============ */
+const TUTORIAL_TOPICS = {
+  salesforce: ['Introduction to Salesforce','CRM Fundamentals','Standard & Custom Objects','Fields and Relationships','Profiles and Permission Sets','Validation Rules','Flows and Automation','Reports and Dashboards','Data Management','Security Model','Deployments','Best Practices'],
+  azuredevops: ['Introduction to Azure DevOps','Boards','Repositories','Branching Strategies','Pipelines','CI/CD','Test Plans','Artifacts','Release Management','Monitoring','Best Practices'],
+  git: ['Git Fundamentals','Repositories','Commits','Branching','Merging','Rebasing','Pull Requests','Conflict Resolution','Git Workflows','Git Best Practices'],
+  copado: ['Copado Overview','User Stories','Promotions','Deployments','CI/CD Pipelines','Automated Testing','Compliance & Governance','Release Management','Best Practices'],
+  gearset: ['Gearset Overview','Metadata Comparison','Deployment Automation','CI/CD Integration','Backup & Recovery','Monitoring','Rollback Strategies','Compliance & Security','Best Practices'],
+};
+
+/* One-line overview + memorable analogy per topic, hand-written for every lesson */
+const TOPIC_BRIEF = {
+  'Introduction to Salesforce':[`Salesforce is a cloud CRM platform for managing customers, sales, service and custom business apps without owning any servers.`,`Think of it like renting a fully-furnished office instead of building one — the walls, power, and security are already handled; you just move in and configure your desk.`],
+  'CRM Fundamentals':[`CRM (Customer Relationship Management) is the practice of tracking every interaction a business has with a customer in one organized place.`,`It\'s like a shared address book that also remembers every conversation you\'ve ever had with each contact.`],
+  'Standard & Custom Objects':[`Objects are Salesforce\'s database tables — Standard Objects (Account, Contact) ship built-in, Custom Objects are ones you design yourself.`,`Standard Objects are like a pre-furnished room; Custom Objects are the extension you build onto the house for something the original blueprint didn\'t include.`],
+  'Fields and Relationships':[`Fields store individual pieces of data on a record, and relationships link records together (like a Contact belonging to an Account).`,`Fields are the columns in a spreadsheet; relationships are the arrows connecting one spreadsheet to another so they stay in sync.`],
+  'Profiles and Permission Sets':[`Profiles set a user\'s baseline access (objects, fields, apps); Permission Sets grant extra access on top without changing their profile.`,`Picture an office building: your Profile is your keycard\'s default access level (which floors you can enter), and a Permission Set is a temporary visitor badge that unlocks one extra room for a project.`],
+  'Validation Rules':[`Validation Rules block a record from saving unless it meets a condition you define, protecting data quality.`,`It\'s the bouncer at the door checking that you meet the dress code before letting the record into the club (the database).`],
+  'Flows and Automation':[`Flow is Salesforce\'s point-and-click automation tool for building processes without writing code.`,`Think of it as a flowchart come to life — you draw the decision tree once, and it runs itself for every record from then on.`],
+  'Reports and Dashboards':[`Reports pull and organize record data into tables; Dashboards turn one or more reports into visual charts on one screen.`,`A Report is the raw spreadsheet; a Dashboard is the pilot\'s cockpit view — dials and gauges built from that same data.`],
+  'Data Management':[`Data Management covers importing, exporting, deduplicating and maintaining clean, trustworthy records at scale.`,`It\'s digital housekeeping — if you don\'t tidy the data regularly, clutter (duplicates, stale records) piles up until nobody can find anything.`],
+  'Security Model':[`The Security Model combines org-wide defaults, role hierarchy, sharing rules and permissions to control exactly who sees what.`,`It works like a building\'s layered security — a front-door badge, floor access, and a locked office door all stacked together.`],
+  'Deployments (Salesforce)':[`Deploying moves metadata (objects, flows, code) from one org, like a Sandbox, into another, like Production.`,`It\'s like moving a rehearsed play from the dress-rehearsal stage to opening night on the main stage.`],
+  'Best Practices (Salesforce)':[`Best Practices are the field-tested habits (bulkification, clean data model, minimal automation overlap) that keep an org maintainable long-term.`,`They're the "measure twice, cut once" carpentry wisdom of Salesforce — small discipline now avoids expensive rework later.`],
+
+  'Introduction to Azure DevOps':[`Azure DevOps is Microsoft\'s all-in-one platform for planning, building, testing and releasing software.`,`It\'s the entire workshop — the blueprint table, the tool wall, and the delivery truck — combined into one Microsoft-hosted space.`],
+  'Boards':[`Boards track work items — user stories, tasks, bugs — as cards that move through columns like To Do, Doing, Done.`,`It's a digital whiteboard with sticky notes that never fall off and remember their entire history.`],
+  'Repositories (Azure DevOps)':[`Azure Repos hosts your Git (or TFVC) source code, giving your team one shared, versioned home for the codebase.`,`It's the shared filing cabinet where every past version of every document is kept, labeled, and retrievable.`],
+  'Branching Strategies':[`A branching strategy defines how a team creates, names and merges branches to avoid stepping on each other's work.`,`It's the traffic-light system for a busy intersection — without agreed rules, everyone crossing at once causes a collision.`],
+  'Pipelines':[`Pipelines automatically build, test and deploy your code whenever changes are pushed, removing manual, error-prone steps.`,`Picture an automated factory assembly line: the raw part (code) goes in one end, gets tested and packaged (built) along the way, and rolls off the other end ready for delivery (deployed) — no human has to push it by hand.`],
+  'CI/CD':[`CI (Continuous Integration) merges and tests code constantly; CD (Continuous Delivery/Deployment) then ships those tested changes out automatically.`,`CI is like a kitchen that tastes every dish as it's cooked; CD is the waiter who brings it straight to the table the moment it passes the taste test.`],
+  'Test Plans':[`Test Plans organize manual and exploratory test cases so QA can systematically verify a feature before release.`,`It's a pilot's pre-flight checklist — you don't take off until every box on the list has been physically checked.`],
+  'Artifacts':[`Artifacts are the packaged, versioned outputs (libraries, binaries) that pipelines produce and other pipelines or teams can consume.`,`They're the labeled, sealed boxes coming off the assembly line — ready to ship to another team's warehouse without them needing to know how you built it.`],
+  'Release Management':[`Release Management coordinates when and how a build moves through environments (Dev → QA → Prod) with the right approvals.`,`It's the flight control tower deciding which plane (release) is cleared to land on which runway (environment) and when.`],
+  'Monitoring (Azure DevOps)':[`Monitoring tracks pipeline health, deployment success rates and application performance after release.`,`It's the dashboard in a car — you don't wait for the engine to die to check the gauges; you watch them continuously.`],
+  'Best Practices (Azure DevOps)':[`Best Practices here mean YAML-as-code pipelines, protected branches, and mandatory reviews baked into everyday workflow.`,`They're the seatbelt laws of DevOps — invisible until the one day they save you from a very bad outcome.`],
+
+  'Git Fundamentals':[`Git is a distributed version control system that tracks every change to your code over time.`,`It's a time machine for your project — you can always travel back to see (or restore) exactly how things looked at any earlier point.`],
+  'Repositories (Git)':[`A repository is the folder Git watches, containing your project's full history of snapshots (commits).`,`It's a photo album that automatically snaps a picture of your entire project every time you say "save this moment."`],
+  'Commits':[`A commit is a saved snapshot of your changes with a message explaining what and why.`,`It's a labeled save-point in a video game — you can always reload from that exact spot later.`],
+  'Branching':[`A branch is an independent line of work that diverges from the main codebase so you can experiment safely.`,`Think of Git branches like multiple authors each drafting a different chapter of the same book at the same time, before all the chapters get combined into the final published edition.`],
+  'Merging':[`Merging combines the changes from one branch back into another, weaving separate lines of work into one.`,`It's the editor stitching every author's finished chapter back into a single, cohesive book.`],
+  'Rebasing':[`Rebasing re-applies your commits on top of a new base, producing a cleaner, linear history instead of a merge commit.`,`It's like re-copying your handwritten notes onto a fresh page in the correct order, instead of taping the old scraps together.`],
+  'Pull Requests':[`A Pull Request proposes your branch's changes for review and discussion before they're merged into the main branch.`,`It's submitting your chapter draft to an editor for comments before it gets bound into the final book.`],
+  'Conflict Resolution':[`A conflict happens when Git can't automatically decide which of two changes to the same line should win, so you decide manually.`,`It's two co-authors editing the same sentence differently — someone has to sit down and agree on the final wording.`],
+  'Git Workflows':[`A workflow (Git Flow, GitHub Flow, trunk-based) is an agreed pattern for how a team creates, names, and merges branches.`,`It's the house rules for a shared kitchen — without them, everyone leaves dishes in the sink differently and chaos follows.`],
+  'Git Best Practices':[`Best Practices include small, focused commits, clear messages, and frequent syncing with the main branch to avoid painful merges.`,`They're flossing for your codebase — a small daily habit that prevents a much bigger, more painful problem later.`],
+
+  'Copado Overview':[`Copado is a release-management platform built specifically to manage Salesforce metadata changes through Git-backed pipelines.`,`It's the professional stage crew for a Salesforce org — coordinating who moves what scenery (metadata) between which stage (environment) and when.`],
+  'User Stories (Copado)':[`A User Story in Copado tracks one unit of metadata change from a source org through to its final destination.`,`It's a shipping label attached to one specific package, so everyone can track exactly where that one change is in transit.`],
+  'Promotions':[`Promotion is the act of advancing a User Story's changes to the next environment in the pipeline.`,`It's a student's report card advancing them to the next grade — Copado checks the requirements are met before letting it through.`],
+  'Deployments (Copado)':[`A Deployment is the actual technical operation of applying metadata changes to a target org.`,`It's the moving truck actually unloading the boxes at the new house, after the move was scheduled and approved.`],
+  'CI/CD Pipelines (Copado)':[`Copado's pipelines connect environments (Dev → QA → UAT → Prod) so changes flow through automated testing and gates on their way to Production.`,`It's a relay race where each runner (environment) only hands off the baton once their leg of quality checks is complete.`],
+  'Automated Testing (Copado)':[`Automated Testing runs Apex or UI tests automatically as part of a promotion, blocking risky changes before they progress.`,`It's a security metal detector at the airport — nothing risky gets past the gate without being checked first.`],
+  'Compliance & Governance (Copado)':[`Governance features enforce code-quality gates, approvals, and audit trails so regulated teams can prove control over every release.`,`It's the paper trail in a court case — every decision is documented so it can be reviewed later if questioned.`],
+  'Release Management (Copado)':[`Release Management coordinates multiple teams' User Stories into a single, scheduled release train.`,`It's an orchestra conductor making sure every section (team) comes in at the right time so the whole piece sounds coordinated.`],
+  'Best Practices (Copado)':[`Best Practices include small User Stories, frequent back-promotion, and strict Quality Gates to avoid last-minute release chaos.`,`They're the "pack light" rule for travelers — smaller, frequent changes are always easier to carry than one giant overloaded suitcase.`],
+
+  'Gearset Overview':[`Gearset is a Salesforce DevOps tool for comparing, deploying, backing up and monitoring org metadata and data.`,`It's a Swiss Army knife for Salesforce releases — comparison, deployment, and backup tools all in one pocket-sized platform.`],
+  'Metadata Comparison':[`Comparison shows exactly what's different between two orgs (or an org and Git) before you commit to a deployment.`,`It's proofreading two drafts of an essay side-by-side before you decide which paragraphs to actually publish.`],
+  'Deployment Automation (Gearset)':[`Deployment Automation lets you schedule and repeat deployments consistently without manually reconfiguring each time.`,`It's a vending machine for releases — press the same button and get the same reliable result every time.`],
+  'CI/CD Integration (Gearset)':[`Gearset connects to Git providers to trigger validation and deployment automatically on every commit or pull request.`,`It's a smoke detector wired directly to the sprinkler system — the moment something's off, the response happens automatically.`],
+  'Backup & Recovery':[`Backup & Recovery takes scheduled snapshots of an org so you can restore data or metadata if something goes wrong.`,`It's the "undo" button for your entire Salesforce org, just with a slightly longer save history than Ctrl+Z.`],
+  'Monitoring (Gearset)':[`Monitoring alerts you when metadata changes outside the pipeline (configuration drift), catching unauthorized changes early.`,`It's a home security camera that texts you the moment someone opens a door you didn't expect.`],
+  'Rollback Strategies':[`A Rollback Strategy is the plan for reversing a bad deployment quickly using backups or a reverse promotion.`,`It's the parachute's reserve cord — you hope to never need it, but you always want it packed and ready.`],
+  'Compliance & Security (Gearset)':[`Compliance & Security features provide audit trails, role-based access, and change history for regulated environments.`,`It's a hotel's keycard log — every entry is time-stamped, so if something goes missing, you know exactly who was in the room and when.`],
+  'Best Practices (Gearset)':[`Best Practices mean backing up before every deployment, validating first, and reviewing comparison reports rather than deploying blind.`,`It's "look both ways before crossing" for release management — a two-second habit that prevents most avoidable accidents.`],
+};
+
+/* Generic-but-topic-aware content builder for steps / best practices / mistakes / takeaways / interview tip */
+function buildLessonContent(tech, topic, overview, analogy, custom){
+  if(custom) return custom;
+  const techName = TECHS.find(t=>t.id===tech).name;
+  return {
+    overview, analogy,
+    steps:[
+      `Start by locating ${topic} in the relevant ${techName} area and exploring it with a low-risk test record or sandbox before touching real data.`,
+      `Identify the two or three most common ways ${topic.toLowerCase()} is used in real projects, and try each of them yourself in a safe environment.`,
+      `Configure a small, realistic example — don't just read about it, build a miniature version so the concept sticks.`,
+      `Review what you built with a colleague or checklist, and note anything that surprised you.`
+    ],
+    useCase:`On a real project, teams typically reach for ${topic.toLowerCase()} whenever they need to keep the ${techName} implementation consistent, auditable, and easy for a new team member to understand quickly.`,
+    scenario:`Imagine joining a mid-sized ${techName} project in its second year — ${topic.toLowerCase()} is one of the first things a new team member should learn, because most day-to-day work touches it in some way.`,
+    bestPractices:[
+      `Keep ${topic.toLowerCase()} simple and well-documented rather than clever — future you (or a teammate) will thank you.`,
+      `Review ${topic.toLowerCase()} periodically as the project grows; what worked for 10 users rarely stays right for 10,000.`
+    ],
+    mistakes:[
+      `Skipping documentation on how ${topic.toLowerCase()} was set up, leaving the next person to reverse-engineer it.`,
+      `Over-engineering ${topic.toLowerCase()} for a problem that didn't need that much complexity yet.`
+    ],
+    takeaways:[
+      `${topic} is a foundational building block — understanding it well pays off across almost every other topic in ${techName}.`,
+      `Hands-on practice beats reading alone — build a small example before moving to the next lesson.`
+    ],
+    interviewTip:`Interviewers often ask you to explain ${topic.toLowerCase()} with a real example from your own project — have one ready, even a small one, rather than a textbook definition.`
+  };
+}
+
+function buildTrack(tech){
+  const topics = TUTORIAL_TOPICS[tech];
+  const techName = TECHS.find(t=>t.id===tech).name;
+  return topics.map((topic, i)=>{
+    const suffixKey = topic+' ('+techName+')';
+    const brief = TOPIC_BRIEF[suffixKey] || TOPIC_BRIEF[topic] || ['Overview coming soon — this lesson is being expanded.',''];
+    const custom = FLAGSHIP_LESSONS[tech+'::'+topic];
+    return {
+      id: tech+'-l'+i,
+      tech, title: topic, order: i,
+      estMinutes: 6 + (i%3)*2,
+      content: buildLessonContent(tech, topic, brief[0], brief[1], custom)
+    };
+  });
+}
+
+/* Fully hand-authored flagship lessons matching the exact analogies requested */
+const FLAGSHIP_LESSONS = {
+  'salesforce::Profiles and Permission Sets': {
+    overview:"Profiles and Permission Sets are how Salesforce controls exactly what each user can see and do. A Profile sets a user's baseline access — which objects, fields, apps and system permissions they get by default — while a Permission Set adds extra access on top of that baseline without changing the user's Profile.",
+    analogy:"Picture an office building. Your Profile is like your employee keycard's default access level — it decides which floors you can normally enter. A Permission Set is a temporary visitor badge for one extra room, like the server room, granted for a specific project without upgrading your everyday keycard.",
+    steps:[
+      "Start in Setup → Profiles to see the baseline permissions already assigned to each user type (e.g., Sales Rep, Support Agent).",
+      "Create a Permission Set in Setup → Permission Sets when a subset of users needs extra access (like a new custom object) without changing everyone's Profile.",
+      "Assign the Permission Set only to the specific users who need it, and review assignments quarterly to avoid access creeping upward over time.",
+      "Test with a user in that Profile (or use 'Login As' in a Sandbox) to confirm they see exactly what's intended — no more, no less."
+    ],
+    useCase:"A real project example: a company's core Sales team uses a 'Sales Rep' Profile for their everyday access, but only the five reps handling enterprise deals need visibility into a sensitive 'Contract Terms' custom object. Instead of creating a whole new Profile for five people, the admin builds a small Permission Set granting access to that one object and assigns it only to those five users.",
+    scenario:"On a growing Salesforce org, an admin who creates a brand-new Profile for every small access difference ends up with 40+ near-duplicate Profiles within a year — a maintenance nightmare. Using a handful of broad Profiles plus targeted Permission Sets for exceptions keeps the model clean and scalable as the company grows.",
+    bestPractices:[
+      "Keep the number of Profiles small and broad (e.g., by job function); use Permission Sets for exceptions instead of cloning Profiles repeatedly.",
+      "Use Permission Set Groups to bundle several related Permission Sets together when users often need the same combination.",
+      "Regularly audit who has which Permission Set — unused access is a security risk even if nobody's misused it yet."
+    ],
+    mistakes:[
+      "Creating a new Profile for every minor access variation, leading to Profile sprawl that's hard to maintain.",
+      "Granting 'Modify All Data' or similarly broad permissions out of convenience instead of scoping access tightly.",
+      "Forgetting to remove a Permission Set once a temporary project ends, leaving stale access behind."
+    ],
+    takeaways:[
+      "Profile = your everyday baseline access; Permission Set = an add-on for specific exceptions.",
+      "Fewer, broader Profiles plus targeted Permission Sets scale far better than many near-duplicate Profiles.",
+      "Access should be reviewed periodically, not just granted once and forgotten."
+    ],
+    interviewTip:"A classic interview question is 'how do Profiles and Permission Sets differ, and when would you use each?' — answer with the keycard/visitor-badge analogy and a concrete example, since interviewers want to see you've applied the concept, not just memorized the definition."
+  },
+  'azuredevops::Pipelines': {
+    overview:"A Pipeline in Azure DevOps automatically builds, tests, and deploys your code every time a change is pushed — replacing manual, error-prone steps with a repeatable, automated process defined in YAML.",
+    analogy:"Picture an automated factory assembly line. Raw material (your code change) enters at one end. Along the line, it's automatically tested (quality control), packaged (built into a deployable artifact), and finally loaded onto the delivery truck (deployed to an environment) — no worker has to manually push it from station to station.",
+    steps:[
+      "Define your pipeline as YAML in the repository (azure-pipelines.yml), so it's version-controlled just like your code.",
+      "Add build steps first (restore dependencies, compile, run unit tests) so every change is validated the same way, every time.",
+      "Add deployment stages next, targeting environments like Dev → QA → Production, each with its own approval or gate if needed.",
+      "Trigger the pipeline automatically on every push or pull request, so nothing ships without passing through the line first."
+    ],
+    useCase:"A real project example: an e-commerce team wired their pipeline so every pull request automatically triggers a build and full test suite; only after that passes does a reviewer even consider approving the merge — catching most bugs before a human ever has to look for them.",
+    scenario:"Imagine a team that used to deploy manually every two weeks, with a checklist someone occasionally forgot a step on. After moving to a pipeline, the same steps run identically every single time, and the team moved from bi-weekly manual releases to several safe deployments a day.",
+    bestPractices:[
+      "Keep pipeline definitions in YAML (not the Classic GUI designer) so changes are reviewable, versioned, and reusable via templates.",
+      "Fail fast — run the quickest checks (lint, unit tests) first so broken changes are caught in seconds, not after a 20-minute deployment.",
+      "Use environments with approval gates for Production, so an automated pipeline doesn't remove a necessary human checkpoint for the riskiest step."
+    ],
+    mistakes:[
+      "Building a pipeline so complex nobody but its original author can safely modify it.",
+      "Skipping test stages 'to save time,' which usually costs far more time later fixing a bad deployment.",
+      "Hardcoding secrets or credentials directly into pipeline YAML instead of using variable groups and Key Vault."
+    ],
+    takeaways:[
+      "A Pipeline turns a manual, error-prone release process into a consistent, automated assembly line.",
+      "YAML pipelines are code — treat them with the same review discipline as application code.",
+      "Fast feedback (fail fast) is more valuable than a pipeline that only tells you something's wrong 20 minutes in."
+    ],
+    interviewTip:"When asked to describe a CI/CD pipeline you've built, structure your answer like the assembly line: what comes in, what stations (stages) it passes through, and what comes out the other end — it's a clear way to show real understanding, not just terminology."
+  },
+  'git::Branching': {
+    overview:"A branch in Git is an independent line of development that diverges from the main codebase, letting you work on a feature or fix without disturbing anyone else's work until you're ready to combine it back.",
+    analogy:"Think of Git branches like several authors each writing a different chapter of the same book at the same time. Each author works independently on their own chapter (branch) without needing to wait for the others. Once a chapter is finished and reviewed, an editor merges it into the master manuscript — the final published book (the main branch).",
+    steps:[
+      "Create a new branch off main for each feature or fix (git checkout -b feature/checkout-page) instead of working directly on main.",
+      "Commit your changes to that branch as you go, keeping main untouched and always deployable.",
+      "Open a Pull Request when your chapter (feature) is ready for review, so teammates can read it before it joins the main manuscript.",
+      "Merge the branch into main once it's approved and tested, then delete the now-finished branch to keep the repository tidy."
+    ],
+    useCase:"A real project example: a five-person team building a checkout flow had one developer on the payment integration branch, another on the shipping-calculator branch, and a third on a UI-polish branch — all working in parallel without blocking each other, then merging each chapter into main once it was reviewed and tested.",
+    scenario:"Imagine a team that used to all commit directly to main. One person's half-finished experiment broke the build for everyone else working that day. After adopting a branching model, each person's unfinished work stays isolated on their own branch — main stays stable and deployable at all times.",
+    bestPractices:[
+      "Keep branches short-lived and focused on one feature or fix — long-lived branches drift further from main and get painful to merge.",
+      "Name branches descriptively (feature/, bugfix/, hotfix/) so anyone can tell their purpose at a glance.",
+      "Merge or rebase from main regularly while your branch is still open, so the final merge is small and easy instead of one giant conflict."
+    ],
+    mistakes:[
+      "Letting a branch live for months without syncing with main, turning a simple merge into a multi-day conflict-resolution project.",
+      "Committing directly to main 'just this once,' which quietly erodes the whole team's trust that main is always stable.",
+      "Never deleting merged branches, leaving a repository cluttered with dozens of finished, forgotten branches."
+    ],
+    takeaways:[
+      "Branches let multiple people write their own 'chapter' in parallel without blocking each other.",
+      "main should stay the stable, always-deployable 'published book' — new work happens on branches, not directly there.",
+      "Short-lived, frequently-synced branches merge far more easily than long-lived ones."
+    ],
+    interviewTip:"If asked to explain branching to a non-technical stakeholder, the book-chapters analogy works well — it shows you can translate a technical concept clearly, which interviewers value as much as the technical accuracy itself."
+  }
+};
+
+const TUTORIAL_TRACKS = {};
+TECHS.forEach(t=>{ TUTORIAL_TRACKS[t.id] = buildTrack(t.id); });
+
+/* ============ PERSONALITY DEVELOPMENT CONTENT ============ */
+function faqHtml(items){
+  return `<h4>FAQs</h4>` + items.map(([q,a])=>`<div class="faqItem"><div class="faqQ">${q}</div><div class="faqA">${a}</div></div>`).join('');
+}
+const PD = [
+  {key:'communication', icon:'&#128172;', title:'Communication Skills', desc:'Speak and write with clarity and confidence.',
+   body:`<p>Strong communication is the single most transferable skill in any technical career — it's what turns good work into recognized impact.</p>
+   <h4>Core principles</h4><ul>
+   <li>Lead with the conclusion, then explain — busy stakeholders want the "so what" first.</li>
+   <li>Match your language to your audience: no jargon with executives, precise terms with engineers.</li>
+   <li>Active listening matters as much as speaking — paraphrase back what you heard before responding.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Before a meeting, write a one-sentence goal for what you want to happen as a result.</li>
+   <li>In writing, use short paragraphs and bullet points for anything longer than 3 sentences.</li>
+   <li>Practice summarizing technical work in 30 seconds for a non-technical audience.</li></ul>
+   ${faqHtml([
+     ["How do I communicate better with non-technical stakeholders?","Translate technical detail into business impact — talk about time saved, risk reduced, or revenue affected instead of implementation detail."],
+     ["What's the best way to handle miscommunication in a team?","Address it quickly and directly with the person involved, restate what each side understood, and agree on one clear version going forward."],
+     ["How can I sound more confident in meetings?","Prepare your key point in advance, speak in shorter sentences, and pause instead of using filler words like 'um' or 'just'."]
+   ])}`},
+  {key:'leadership', icon:'&#127942;', title:'Leadership Skills', desc:'Influence and guide teams, with or without a title.',
+   body:`<p>Leadership isn't about a job title — it's about the ability to align people around a goal and help them do their best work.</p>
+   <h4>Core principles</h4><ul>
+   <li>Model the behavior you want to see; teams copy what leaders do, not what they say.</li>
+   <li>Delegate outcomes, not just tasks — give people the "why" and let them own the "how".</li>
+   <li>Give credit publicly and feedback privately.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Start 1:1s by asking "what's blocking you?" before giving your own updates.</li>
+   <li>Set clear, written expectations for any task you hand off to avoid ambiguity later.</li>
+   <li>When a mistake happens, focus the conversation on the process, not the person.</li></ul>
+   ${faqHtml([
+     ["Can I be a leader without a management title?","Yes — leading a project, mentoring a peer, or driving a decision to consensus are all leadership acts regardless of title."],
+     ["How do I give feedback that lands well?","Be specific, timely, and tie it to the behavior and impact rather than the person's character, and always leave room for their perspective."],
+     ["What's the biggest mistake new leads make?","Trying to do the work themselves instead of enabling the team — it feels faster short-term but caps what the team can achieve."]
+   ])}`},
+  {key:'publicspeaking', icon:'&#127908;', title:'Public Speaking', desc:'Deliver ideas that land and stick, in front of any room.',
+   body:`<p>Public speaking is a structured performance skill — the nerves rarely go away completely, but preparation makes them manageable.</p>
+   <h4>Core principles</h4><ul>
+   <li>Structure every talk as: context → problem → solution → impact.</li>
+   <li>One idea per slide; if you need to explain a slide out loud for a minute, it has too much on it.</li>
+   <li>Rehearse the opening and closing lines word-for-word — everything else can be looser.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Use the "rule of three" — audiences remember three points far better than seven.</li>
+   <li>Pause after key statements instead of filling silence with filler words.</li>
+   <li>Anticipate the two hardest questions you might get and prepare answers in advance.</li></ul>
+   ${faqHtml([
+     ["How do I calm nerves before speaking?","Practice out loud (not just in your head) at least three times, arrive early to get comfortable with the room, and take a few slow breaths beforehand."],
+     ["How long should a presentation be?","As short as it can be while still making your point — aim to leave the audience wanting more detail, not less."],
+     ["What if I get a question I can't answer?","Say so honestly, offer to follow up with an answer, and move on confidently rather than guessing."]
+   ])}`},
+  {key:'presentation', icon:'&#128202;', title:'Presentation Skills', desc:'Turn slides and data into a clear, persuasive story.',
+   body:`<p>A presentation is a visual argument — the slides exist to support your point, not to hold your entire script.</p>
+   <h4>Core principles</h4><ul>
+   <li>Every deck should answer one question: what do you want the audience to believe or do afterward?</li>
+   <li>Design for the room, not for reading later — that's a separate document.</li>
+   <li>Data slides need a single takeaway, highlighted visually, not ten numbers competing for attention.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Storyboard the flow on paper before opening a slide tool — structure first, polish second.</li>
+   <li>Use consistent, minimal color and type choices so the content carries the attention, not the design.</li>
+   <li>End every deck with a clear, specific ask or next step, not just a generic "thank you" slide.</li></ul>
+   ${faqHtml([
+     ["How many slides should a 15-minute talk have?","Roughly 8-12 well-paced slides is a reasonable guide — fewer, richer slides beat many rushed ones."],
+     ["What's the biggest presentation-design mistake?","Treating a slide as a document to be read line-by-line instead of a visual aid for something you're saying out loud."],
+     ["How do I present data without overwhelming the audience?","Show one key metric or trend per chart, and put full detail in an appendix slide for those who want to dig in."]
+   ])}`},
+  {key:'interview', icon:'&#127919;', title:'Interview Preparation', desc:'Walk into any interview ready and calm.',
+   body:`<p>Interview performance is a skill you can train, independent of your technical knowledge — preparation removes the randomness.</p>
+   <h4>Before the interview</h4><ul>
+   <li>Research the company's products, recent news, and the specific team you're interviewing with.</li>
+   <li>Prepare 3-4 STAR-format stories (Situation, Task, Action, Result) covering conflict, failure, leadership, and impact.</li>
+   <li>Review your own resume line by line — be ready to go deep on anything you've written.</li></ul>
+   <h4>During the interview</h4><ul>
+   <li>Think out loud during technical questions; interviewers assess process, not just the final answer.</li>
+   <li>If you don't know something, say so directly, then explain how you'd find the answer.</li>
+   <li>Always prepare 2-3 thoughtful questions to ask the interviewer at the end.</li></ul>
+   ${faqHtml([
+     ["What's the STAR method?","Situation, Task, Action, Result — a structure for answering behavioral questions with a clear story instead of a vague answer."],
+     ["How do I answer 'tell me about yourself'?","Give a 60-second summary: current role, relevant experience, and why you're interested in this opportunity — not your full life history."],
+     ["Should I negotiate the offer?","In most cases yes — politely ask if there's flexibility on compensation or start date, backed by market research."]
+   ])}`},
+  {key:'time', icon:'&#9200;', title:'Time Management', desc:'Get more of the right things done.',
+   body:`<p>Time management is really priority management — the goal isn't to do more, it's to make sure the important things actually happen.</p>
+   <h4>Core principles</h4><ul>
+   <li>Use the Eisenhower Matrix: separate urgent vs. important, and protect time for important-but-not-urgent work.</li>
+   <li>Batch similar tasks (emails, reviews, meetings) instead of context-switching constantly.</li>
+   <li>Plan tomorrow at the end of today, while context is still fresh.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Time-box deep work in 45-90 minute blocks with notifications off.</li>
+   <li>Use the "two-minute rule" — if a task takes under two minutes, do it immediately rather than scheduling it.</li>
+   <li>Review your calendar weekly and cancel or decline meetings without a clear agenda.</li></ul>
+   ${faqHtml([
+     ["How do I stop procrastinating on big tasks?","Break the task into a first step so small it feels trivial to start — momentum builds from there."],
+     ["What if my day is full of meetings?","Audit your recurring meetings monthly; decline or shorten any without a clear agenda or outcome."],
+     ["Is multitasking effective?","Generally no — task-switching has a real cost; batching similar work produces better results faster."]
+   ])}`},
+  {key:'teamwork', icon:'&#129309;', title:'Team Collaboration', desc:'Work well with people who think differently than you.',
+   body:`<p>The best individual output rarely beats good teamwork — collaboration multiplies what a team can achieve together.</p>
+   <h4>Core principles</h4><ul>
+   <li>Assume good intent — most friction comes from missing context, not bad faith.</li>
+   <li>Make your work visible early (drafts, WIP) so teammates can course-correct before too much effort is sunk.</li>
+   <li>Document decisions and their reasoning so the team doesn't relitigate them repeatedly.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>In disagreements, state the other person's position back to them before countering it.</li>
+   <li>Default to over-communicating status on shared work, especially in remote/async teams.</li>
+   <li>Celebrate team wins publicly, not just individual ones.</li></ul>
+   ${faqHtml([
+     ["How do I work with a difficult teammate?","Focus on the specific behavior and its impact on the work, address it privately and directly, and involve a manager only if it persists."],
+     ["How do remote teams stay collaborative?","Over-communicate status in writing, default to async updates, and keep a small number of well-run synchronous meetings for things that truly need real-time discussion."],
+     ["What makes a team meeting effective?","A clear agenda, the right people in the room, and a decision or action item coming out of it — not just a status readout."]
+   ])}`},
+  {key:'problemsolving', icon:'&#129504;', title:'Problem-Solving Techniques', desc:'Break down hard problems methodically.',
+   body:`<p>Strong problem solvers aren't necessarily the smartest in the room — they're the most systematic about breaking a problem down.</p>
+   <h4>Core principles</h4><ul>
+   <li>Define the problem precisely before jumping to solutions — a vague problem statement leads to a vague fix.</li>
+   <li>Break large problems into smaller, independently testable pieces.</li>
+   <li>Use root-cause techniques like the "5 Whys" instead of treating symptoms.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Write the problem down in one sentence before discussing solutions with others.</li>
+   <li>Generate multiple options before picking one — the first idea is rarely the best.</li>
+   <li>After solving a recurring problem, document the fix so the next person doesn't start from zero.</li></ul>
+   ${faqHtml([
+     ["What is the '5 Whys' technique?","Repeatedly asking 'why did this happen' about five times to move past symptoms and reach the actual root cause of a problem."],
+     ["How do I solve a problem I've never seen before?","Break it into smaller known sub-problems, research similar cases, and prototype the riskiest unknown first."],
+     ["How do I know when to stop analyzing and start acting?","When further analysis is unlikely to change your decision, or the cost of delay exceeds the cost of being slightly wrong."]
+   ])}`},
+  {key:'career', icon:'&#128200;', title:'Career Development', desc:'Grow intentionally instead of by accident.',
+   body:`<p>Careers that compound are the result of deliberate choices, not just working hard and waiting to be noticed.</p>
+   <h4>Core principles</h4><ul>
+   <li>Optimize for learning and scope early in your career; optimize for leverage and impact later.</li>
+   <li>Seek feedback proactively rather than waiting for annual reviews.</li>
+   <li>Build a visible track record — write things down, share learnings, present your work.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Set a personal quarterly goal that's slightly outside your comfort zone.</li>
+   <li>Keep a running "brag document" of accomplishments — it makes performance reviews and interviews far easier.</li>
+   <li>Find a mentor and, once you're able, be one — teaching deepens your own expertise.</li></ul>
+   ${faqHtml([
+     ["How do I ask for a promotion?","Document your impact against the next level's expectations, discuss the goal with your manager well in advance, and ask what specifically is needed to get there."],
+     ["Should I specialize or stay generalist?","Early career, breadth helps you find your strengths; mid-career, depth in a chosen area usually creates more leverage and recognition."],
+     ["How often should I update my resume?","Every few months while achievements are fresh, even if you're not job hunting — memory fades fast."]
+   ])}`},
+  {key:'etiquette', icon:'&#127917;', title:'Workplace Etiquette', desc:'Small habits that build a strong reputation.',
+   body:`<p>Workplace etiquette is the set of small, consistent behaviors that make people want to work with you again.</p>
+   <h4>Core principles</h4><ul>
+   <li>Reply to messages within a reasonable time, even if just to say "got it, more details soon."</li>
+   <li>Be on time for meetings, and give notice as early as possible if you can't be.</li>
+   <li>Keep confidential information confidential — trust is earned slowly and lost quickly.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>In email/chat, lead with the ask, then supporting context — don't bury the request.</li>
+   <li>Address disagreements directly with the person involved before escalating.</li>
+   <li>Say thank you specifically — naming what someone did well matters more than a generic thanks.</li></ul>
+   ${faqHtml([
+     ["What's proper email etiquette?","Clear subject line, the ask up front, concise body, and a defined next step or deadline if one is needed."],
+     ["How do I decline a meeting politely?","Explain briefly why it's not a good use of your time and suggest an alternative, like an async update instead."],
+     ["Is it okay to disagree with a manager?","Yes, when done respectfully and with reasoning — most good managers want to hear a well-argued dissenting view."]
+   ])}`},
+  {key:'workplace', icon:'&#127970;', title:'Professional Growth Tips', desc:'Habits that make you effective and visible day to day.',
+   body:`<p>Professional growth is less about big moments and more about consistent, boring reliability compounding over time.</p>
+   <h4>Core principles</h4><ul>
+   <li>Default to written documentation for decisions and processes — memory fades, documents don't.</li>
+   <li>Ask clarifying questions before starting ambiguous work, not after you've built the wrong thing.</li>
+   <li>Protect focus time, but stay reachable for anything urgent and blocking others.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Start new tasks by restating your understanding of the goal to the requester.</li>
+   <li>Keep a simple personal system (task list, notes) so nothing depends only on memory.</li>
+   <li>When something breaks, communicate early rather than trying to quietly fix it under pressure.</li></ul>
+   ${faqHtml([
+     ["How do I become more visible at work without bragging?","Share progress and learnings proactively in the channels your team already uses — visibility comes from consistent updates, not self-promotion."],
+     ["What's one habit that compounds a career the most?","Writing things down — decisions, learnings, and outcomes — turns everyday work into a lasting, referenceable track record."],
+     ["How do I recover from a visible mistake at work?","Own it quickly, explain the fix and the safeguard against recurrence, and move forward — how you handle it matters more than the mistake itself."]
+   ])}`},
+  {key:'networking', icon:'&#129309;', title:'Professional Networking', desc:'Build genuine relationships that open doors over time.',
+   body:`<p>Networking isn't collecting contacts — it's building a small set of real relationships you can learn from and occasionally lean on, and who can lean on you too.</p>
+   <h4>Core principles</h4><ul>
+   <li>Give before you ask — share something useful before requesting a favor.</li>
+   <li>Depth beats breadth — a handful of real relationships outperform hundreds of cold connections.</li>
+   <li>Stay in touch during the quiet times, not just when you need something.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>After meeting someone useful, send a short follow-up message within 48 hours referencing something specific you discussed.</li>
+   <li>Keep a simple list of people you want to stay in touch with and reach out a few times a year.</li>
+   <li>Offer an introduction, article, or piece of advice before asking for one.</li></ul>
+   ${faqHtml([
+     ["I find networking uncomfortable — any tips?","Reframe it as curiosity, not selling — ask genuine questions about someone's work and the conversation usually takes care of itself."],
+     ["How do I network if I'm early in my career?","Show up consistently in communities (meetups, forums, alumni groups), ask thoughtful questions publicly, and offer help wherever you can — reputation compounds."],
+     ["What's the etiquette for asking someone for a referral?","Be specific about what you're asking for, make it easy to say no, and only ask people who genuinely know your work well."]
+   ])}`},
+  {key:'emotional', icon:'&#128420;', title:'Emotional Intelligence', desc:'Understand and manage emotions — yours and others\' — at work.',
+   body:`<p>Emotional intelligence is the ability to notice what you and others are feeling, and to use that awareness to communicate and decide more effectively.</p>
+   <h4>Core principles</h4><ul>
+   <li>Self-awareness comes first — you can't manage a reaction you haven't noticed.</li>
+   <li>Pause before responding to something that triggers a strong reaction.</li>
+   <li>Empathy means understanding someone's perspective, not necessarily agreeing with it.</li></ul>
+   <h4>Practical tips</h4><ul>
+   <li>Name the emotion you're feeling in the moment — labeling reduces its intensity.</li>
+   <li>Before reacting to a frustrating message, wait an hour if you can before replying.</li>
+   <li>Ask "what might they be dealing with?" before assuming bad intent from a colleague.</li></ul>
+   ${faqHtml([
+     ["How do I stay calm under pressure?","Build a brief pause into your reaction — a few slow breaths or a short walk before responding — so you're replying from judgment, not impulse."],
+     ["How do I handle a colleague who's upset with me?","Listen fully before defending yourself, acknowledge their perspective, and ask what would help — most tension defuses once someone feels heard."],
+     ["Can emotional intelligence really be improved?","Yes — like any skill, it improves with deliberate practice: noticing your reactions, reflecting afterward, and adjusting your response next time."]
+   ])}`}
+];
+
+/* Case studies & common-mistakes enrichment, added to every Personality Development topic */
+const PD_EXTRA = {
+  communication:{case:"A support engineer kept losing customers in escalations because responses were technically correct but buried the actual fix in paragraphs of caveats. After switching to a 'headline first, detail after' structure, escalation resolution time dropped noticeably and customer satisfaction scores improved within a quarter.",
+    mistakes:["Burying the key point under background context — say the conclusion first.","Assuming silence means agreement — confirm understanding explicitly.","Writing long emails when a two-line message (or a quick call) would resolve it faster."]},
+  leadership:{case:"A new team lead tried to personally review every line of code to 'maintain quality,' which became a bottleneck within weeks. Shifting to clear review guidelines and trusting senior engineers to review most work freed the lead to focus on unblocking the team and cut review turnaround time significantly.",
+    mistakes:["Micromanaging instead of setting clear expectations and trusting the team.","Avoiding difficult feedback conversations until small issues become big ones.","Taking credit for team wins instead of highlighting individual contributions."]},
+  publicspeaking:{case:"An engineer dreaded an all-hands demo after a rough dry run, so they rehearsed the opening 30 seconds until it was automatic and prepared index cards for the two hardest anticipated questions. The live demo went smoothly, and the prepared answers to tough questions were what stakeholders remembered most.",
+    mistakes:["Reading slides word-for-word instead of talking to the audience.","Cramming too much detail into limited time instead of picking the top 2-3 points.","Not preparing for the hard questions, which are usually predictable in advance."]},
+  presentation:{case:"A product team's roadmap deck kept losing the room until they replaced fifteen dense bullet-point slides with five slides built around a single visual story — problem, options, recommendation, plan, ask. Buy-in for the recommended option was reached in one meeting instead of three.",
+    mistakes:["Cramming multiple ideas onto one slide instead of one idea per slide.","Designing slides to be read rather than to support what you're saying out loud.","Skipping a clear 'ask' at the end, leaving the audience unsure what happens next."]},
+  interview:{case:"A candidate kept failing technical interviews despite strong skills because answers jumped straight to code without explaining the approach. After practicing 'think out loud' delivery — stating assumptions, approach, then implementation — the same skill level led to multiple offers within a month.",
+    mistakes:["Jumping to a solution without clarifying the problem or asking questions first.","Memorizing answers instead of understanding the underlying concepts, which falls apart under follow-up questions.","Not preparing questions to ask the interviewer, which can read as low genuine interest."]},
+  time:{case:"A developer's calendar was 90% recurring meetings with almost no deep-work blocks, and feature delivery kept slipping. After auditing and cutting a third of recurring meetings and protecting two daily 90-minute focus blocks, delivery timelines became predictable again within a sprint or two.",
+    mistakes:["Saying yes to every meeting invite without asking whether your presence is essential.","Multitasking on urgent-but-unimportant tasks while important work quietly slips.","Not reviewing or adjusting your calendar regularly as priorities shift."]},
+  teamwork:{case:"Two engineers on a distributed team kept clashing over API design until they scheduled one direct call instead of arguing in code review comments. The 20-minute conversation resolved a disagreement that had spanned two weeks of asynchronous back-and-forth.",
+    mistakes:["Letting disagreements drag out in text instead of having one direct conversation.","Assuming a quiet teammate agrees when they may just be unheard.","Withholding work-in-progress until it's 'perfect,' which blocks early feedback."]},
+  problemsolving:{case:"A production outage was initially 'fixed' three times by restarting a service, until someone applied the 5 Whys and traced it to a memory leak in a rarely-used code path. The real fix eliminated the recurring 2am pages entirely.",
+    mistakes:["Treating symptoms (restarting a service) instead of finding the root cause.","Jumping to the first solution instead of comparing a few options.","Not documenting the fix, so the same issue gets 're-solved' by someone else later."]},
+  career:{case:"An engineer felt stuck at the same level for two years despite good work, until they started a quarterly 'brag document' and used it to have a specific, evidence-backed promotion conversation with their manager — resulting in a promotion the following cycle.",
+    mistakes:["Assuming good work will automatically be noticed without documenting or communicating it.","Staying in a comfortable scope too long instead of seeking stretch opportunities.","Waiting for an annual review to ask for feedback instead of seeking it continuously."]},
+  etiquette:{case:"A contractor lost a renewal opportunity not due to skill but because status updates were sporadic and meetings often started late. A simple habit change — weekly written updates and being five minutes early — visibly rebuilt the client's confidence within a month.",
+    mistakes:["Letting messages sit unanswered for days without even a quick acknowledgment.","Being chronically late to meetings without communicating in advance.","Venting about a colleague or client in the wrong channel, damaging trust when it surfaces."]},
+  networking:{case:"A job seeker sent generic connection requests for months with no responses, then switched to referencing a specific shared project or article in each message. Response rates rose sharply, and one such conversation led directly to a referral and eventual offer.",
+    mistakes:["Sending generic connection requests with no context or shared reference point.","Only reaching out when you need something, instead of staying in touch consistently.","Being transactional — asking for a favor before offering any value first."]},
+  emotional:{case:"A manager almost sent a sharply worded reply to a frustrated team member's message, but waited an hour before responding. The calmer reply uncovered that the team member was dealing with an unrelated personal issue, and the conversation strengthened trust instead of damaging it.",
+    mistakes:["Reacting immediately to a frustrating message instead of pausing first.","Assuming a colleague's tone reflects their opinion of you rather than their own pressure.","Suppressing emotions entirely instead of naming and processing them constructively."]},
+  workplace:{case:"A team kept losing context every time someone went on leave, because decisions lived only in Slack threads. After adopting a habit of writing a short decision doc for anything non-trivial, onboarding new team members and covering for absences became dramatically faster.",
+    mistakes:["Keeping key decisions only in verbal or chat form instead of writing them down.","Starting ambiguous work without confirming the goal first.","Hiding a problem while trying to fix it quietly, instead of raising it early."]},
+};
+function enrichPersonalityContent(){
+  PD.forEach(p=>{
+    const extra = PD_EXTRA[p.key];
+    if(!extra) return;
+    p.body += `<h4>Case study</h4><p>${extra.case}</p>
+      <h4>Common mistakes to avoid</h4><ul>${extra.mistakes.map(m=>`<li>${m}</li>`).join('')}</ul>`;
+  });
+}
+enrichPersonalityContent();
+
+/* ============ USER STORE ============ */
+let activityLog = [];
+function logActivity(user, event){ activityLog.unshift({user, event, ts:new Date()}); if(activityLog.length>200) activityLog.pop(); }
+
+let users = {};
+function seedUsers(){
+  users = {
+    'priya.sharma@example.com': mkUser('Priya Sharma','Passw0rd!','approved', 6, 5),
+    'daniel.osei@example.com': mkUser('Daniel Osei','Passw0rd!','pending', 0, 0),
+    'mei.lin@example.com': mkUser('Mei Lin','Passw0rd!','approved', 3, 2),
+    'carlos.fuentes@example.com': mkUser('Carlos Fuentes','Passw0rd!','rejected', 0, 0),
+  };
+}
+function mkUser(name, password, status, logins, daysAgoLastLogin){
+  const created = new Date(Date.now() - Math.floor(Math.random()*40+5)*86400000);
+  const lastLogin = status==='approved' && logins>0 ? new Date(Date.now() - daysAgoLastLogin*86400000) : null;
+  return {name, password, status, role:'user', createdAt:created, lastLogin, loginCount:logins};
+}
+seedUsers();
+function seedActivity(){
+  activityLog = [
+    {user:'priya.sharma@example.com', event:'Logged in', ts:new Date(Date.now()-3600000)},
+    {user:'mei.lin@example.com', event:'Logged in', ts:new Date(Date.now()-86400000)},
+    {user:'daniel.osei@example.com', event:'Registered (pending approval)', ts:new Date(Date.now()-172800000)},
+    {user:'carlos.fuentes@example.com', event:'Registration rejected by admin', ts:new Date(Date.now()-259200000)},
+    {user:'priya.sharma@example.com', event:'Approved by admin', ts:new Date(Date.now()-2600000000)},
+  ];
+}
+seedActivity();
+
+/* ============ AUTH ============ */
+function switchAuthTab(tab){
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('loginForm').classList.toggle('hidden', tab!=='login');
+  document.getElementById('signupForm').classList.toggle('hidden', tab!=='signup');
+  document.getElementById('authMsgArea').innerHTML='';
+  document.getElementById('authSwitchNote').innerHTML = tab==='login'
+    ? 'New to AbTechie? <button class="linkBtn" onclick="switchAuthTab(\'signup\')">Create an account</button>'
+    : 'Already have an account? <button class="linkBtn" onclick="switchAuthTab(\'login\')">Log in</button>';
+}
+
+function handleSignup(e){
+  e.preventDefault();
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const password = document.getElementById('signupPassword').value;
+  if(email===_AK){ showAuthMsg('error','This email is reserved.'); return; }
+  users[email] = {name, password, status:'pending', role:'user', createdAt:new Date(), lastLogin:null, loginCount:0};
+  logActivity(email, 'Registered (pending approval)');
+  switchAuthTab('login');
+  showAuthMsg('pending','Account created for '+email+'. Your registration is now <strong>Pending Approval</strong> — an admin will review it shortly. You\'ll be able to log in once approved.');
+}
+
+function showAuthMsg(type, html){
+  const cls = type==='pending' ? 'pendingBox' : 'errorBox';
+  document.getElementById('authMsgArea').innerHTML = `<div class="${cls}">${html}</div>`;
+}
+
+function handleLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+
+  if(email===_AK){
+    if(password===_AS){ logActivity(email,'Admin logged in'); loginUser('Admin', email, true); return; }
+    showAuthMsg('error','Incorrect admin password.'); return;
+  }
+
+  const existing = users[email];
+  if(!existing){
+    showAuthMsg('error','No account found for this email. Please sign up first.'); return;
+  }
+  if(existing.password !== password){
+    showAuthMsg('error','Incorrect email or password.'); return;
+  }
+  if(existing.status==='pending'){
+    showAuthMsg('pending','Your account is still <strong>Pending Approval</strong>. You\'ll be able to log in once an admin approves your registration.'); return;
+  }
+  if(existing.status==='rejected'){
+    showAuthMsg('error','Your registration request was not approved. Please contact the AbTechie admin for details.'); return;
+  }
+  existing.lastLogin = new Date();
+  existing.loginCount = (existing.loginCount||0) + 1;
+  logActivity(email, 'Logged in');
+  loginUser(existing.name, email, false);
+}
+
+function loginUser(name, email, adminFlag){
+  currentUser = {name: name || 'User', email};
+  isAdmin = !!adminFlag;
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  const initial = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById('sideAvatar').textContent = initial;
+  document.getElementById('sideName').innerHTML = currentUser.name + (isAdmin ? '<span class="adminTag">ADMIN</span>' : '');
+  document.getElementById('sideEmail').textContent = currentUser.email;
+  document.getElementById('profAvatar').textContent = initial;
+  document.getElementById('profName').value = currentUser.name;
+  document.getElementById('profEmail').value = currentUser.email;
+  document.getElementById('navAdminSection').classList.toggle('hidden', !isAdmin);
+  if(isAdmin) renderAdminTechNavList();
+  renderTechNav();
+  goView(isAdmin ? 'admin-users' : 'dashboard');
+  showToast(isAdmin ? 'Welcome back, Admin' : 'Welcome back, ' + currentUser.name + '!');
+}
+
+function handleLogout(){
+  currentUser = null; isAdmin = false;
+  document.getElementById('app').style.display='none';
+  document.getElementById('authScreen').style.display='flex';
+  document.getElementById('loginForm').reset();
+}
+
+function saveProfile(){
+  currentUser.name = document.getElementById('profName').value;
+  currentUser.email = document.getElementById('profEmail').value;
+  document.getElementById('sideName').textContent = currentUser.name;
+  document.getElementById('sideEmail').textContent = currentUser.email;
+  showToast('Profile updated');
+}
+
+/* ============ NAV ============ */
+function toggleAdminGroup(){
+  const body = document.getElementById('adminGroupBody');
+  const chev = document.getElementById('adminGroupChevron');
+  body.classList.toggle('open');
+  chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+function toggleContentGroup(e){
+  if(e) e.stopPropagation();
+  const body = document.getElementById('contentGroupBody');
+  const chev = document.getElementById('contentGroupChevron');
+  body.classList.toggle('open');
+  chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+function renderAdminTechNavList(){
+  document.getElementById('adminTechNavList').innerHTML = TECHS.map(t=>{
+    const count = DB.filter(d=>d.tech===t.id).length;
+    return `<button class="navItem subsub" data-view="admin-content-${t.id}" onclick="goView('admin-content','${t.id}')">
+      <span class="navBadge" style="background:${t.color}1A;color:${t.color};width:20px;height:20px;font-size:9px;">${t.short}</span>${t.name}<span class="navCount">${count}</span></button>`;
+  }).join('');
+}
+function renderTechNav(){
+  const el = document.getElementById('techNav');
+  el.innerHTML = TECHS.map(t=>{
+    const count = DB.filter(d=>d.tech===t.id).length;
+    return `<button class="navItem" data-view="tech-${t.id}" onclick="goView('tech','${t.id}')">
+      <span class="navBadge" style="background:${t.color}1A;color:${t.color};">${t.short}</span>${t.name}<span class="navCount">${count}</span></button>`;
+  }).join('');
+}
+function setActiveNav(view, tech){
+  document.querySelectorAll('.navItem').forEach(b=>b.classList.remove('active'));
+  const key = view==='tech' ? `tech-${tech}` : (view==='admin-content' ? `admin-content-${tech||adminTech}` : view);
+  const btn = document.querySelector(`.navItem[data-view="${key}"]`);
+  if(btn) btn.classList.add('active');
+  if(view.startsWith('admin')){
+    document.getElementById('adminGroupBody').classList.add('open');
+    document.getElementById('adminGroupChevron').style.transform='rotate(180deg)';
+    if(view==='admin-content'){
+      document.getElementById('contentGroupBody').classList.add('open');
+      document.getElementById('contentGroupChevron').style.transform='rotate(180deg)';
+    }
+  }
+}
+function renderBreadcrumb(parts){
+  document.getElementById('breadcrumbBar').innerHTML = parts.map((p,i)=>{
+    const isLast = i===parts.length-1;
+    return (i>0?`<span class="sep">/</span>`:'') + (isLast ? `<b>${p}</b>` : `<span>${p}</span>`);
+  }).join('');
+}
+
+function goView(view, techId){
+  currentView = view; currentTech = techId || null;
+  if(view==='admin-content' && techId) adminTech = techId;
+  ['dashboard','category','personality','profile','admin-users','admin-content','admin-dashboard','admin-system','quiz-picker','quiz-session','quiz-results','bookmarks','admin-settings','tutorials-home','tutorials-track','tutorials-lesson'].forEach(v=>{
+    document.getElementById('view-'+v).classList.toggle('hidden', !(v===view || (v==='category' && view==='tech')));
+  });
+  document.getElementById('sidebar').classList.remove('openMobile');
+  setActiveNav(view, techId);
+  document.getElementById('headerActions').innerHTML='';
+
+  if(view.startsWith('admin') && !isAdmin){ goView('dashboard'); return; }
+
+  const titles = {
+    dashboard:['Dashboard','Your interview prep at a glance', ['Overview','Dashboard']],
+    personality:['Personality Development','Grow the soft skills that complement your technical expertise', ['Overview','Personality Development']],
+    profile:['Profile','Manage your account details', ['Account','Profile']],
+    'admin-users':['Users & Approvals','Admin only — review registrations and manage access', ['Admin Panel','Users & Approvals']],
+    'admin-content':['Content Manager','Manage questions, answers, images and categories', ['Admin Panel','Content Manager']],
+    'admin-dashboard':['Admin Dashboard','Platform usage, storage and system health — admin only', ['Admin Panel','Admin Dashboard']],
+    'admin-system':['About System','Admin only — technical details of this application', ['Admin Panel','About System']],
+    'admin-settings':['System Settings','Admin only — platform configuration', ['Admin Panel','System Settings']],
+    'quiz-picker':['Practice Quiz','Choose a technology to test yourself', ['Overview','Practice Quiz']],
+    'quiz-session':['Practice Quiz','Answer each question, then review your results', ['Overview','Practice Quiz','In progress']],
+    'quiz-results':['Quiz Results','Your performance summary and answer review', ['Overview','Practice Quiz','Results']],
+    bookmarks:['Bookmarks','Questions you saved for quick revision', ['Overview','Bookmarks']],
+    'tutorials-home':['Tutorials','Structured, beginner-to-advanced learning tracks', ['Overview','Tutorials']],
+  };
+  const main = document.querySelector('.main');
+  main.classList.remove('fadeIn'); void main.offsetWidth; main.classList.add('fadeIn');
+
+  if(view==='tech'){
+    const t = TECHS.find(x=>x.id===techId);
+    document.getElementById('pageTitle').textContent=t.name;
+    document.getElementById('pageSub').textContent=`Question bank · ${t.name} interview prep`;
+    renderBreadcrumb(['Technologies', t.name]);
+    document.getElementById('searchInput').value='';
+    document.getElementById('filterDifficulty').value='all';
+    document.getElementById('sortMode').value='custom';
+    renderQuestions();
+  } else if(view==='tutorials-track'){
+    const t = TECHS.find(x=>x.id===techId);
+    document.getElementById('pageTitle').textContent = t.name+' Tutorials';
+    document.getElementById('pageSub').textContent = 'Beginner to advanced — chapters and lessons';
+    renderBreadcrumb(['Overview','Tutorials', t.name]);
+    renderTutorialsTrack(techId);
+  } else if(view==='tutorials-lesson'){
+    renderTutorialsLesson();
+  } else if(titles[view]){
+    document.getElementById('pageTitle').textContent=titles[view][0];
+    document.getElementById('pageSub').textContent=titles[view][1];
+    renderBreadcrumb(titles[view][2]);
+    if(view==='dashboard') renderDashboard();
+    if(view==='personality') renderPersonality();
+    if(view==='admin-users') renderAdminUsers();
+    if(view==='admin-content'){ renderAdminContentTabs(); renderAdminTechNavList(); }
+    if(view==='admin-dashboard') renderAdminDashboard();
+    if(view==='admin-system') renderAdminSystem();
+    if(view==='tutorials-home') renderTutorialsHome();
+    if(view==='admin-settings') renderAdminSettings();
+    if(view==='quiz-picker') renderQuizPicker();
+    if(view==='quiz-session') renderQuizSession();
+    if(view==='bookmarks') renderBookmarks();
+  }
+}
+
+/* ============ DASHBOARD ============ */
+function renderDashboard(){
+  const grid = document.getElementById('statGrid');
+  grid.innerHTML = TECHS.map(t=>{
+    const items = DB.filter(d=>d.tech===t.id);
+    const b = items.filter(i=>i.difficulty==='basic').length;
+    const a = items.filter(i=>i.difficulty==='advanced').length;
+    const ar = items.filter(i=>i.difficulty==='architect').length;
+    const preview = items.slice(0,3);
+    return `<div class="accordionCard" id="acc-${t.id}" style="grid-column:1/-1;">
+      <div class="accordionHead" onclick="toggleTechAccordion('${t.id}')">
+        <div class="accordionTitleRow">
+          <div class="navBadge" style="background:${t.color}1A;color:${t.color};">${t.short}</div>
+          <div><div style="font-weight:700;font-size:14.5px;">${t.name}</div>
+          <div class="breakdown" style="margin-top:2px;"><span style="color:var(--basic)">B ${b}</span><span style="color:var(--advanced)">A ${a}</span><span style="color:var(--architect)">Ar ${ar}</span><span class="mono" style="color:var(--muted);">· ${items.length} total</span></div></div>
+        </div>
+        <span class="accordionChevron">&#9662;</span>
+      </div>
+      <div class="accordionBody">
+        <div class="accordionInner">
+          ${preview.map(q=>`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;">${escapeHtml(q.question)} <span class="diffBadge ${q.difficulty}" style="margin-left:6px;">${q.difficulty}</span></div>`).join('')}
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+            <button class="btn primary" onclick="event.stopPropagation();goView('tech','${t.id}')">View full question bank</button>
+            <button class="btn" onclick="event.stopPropagation();goView('tutorials-track','${t.id}')">Tutorials</button>
+            <button class="btn" onclick="event.stopPropagation();startQuiz('${t.id}')">Practice quiz</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const recentItems = recentlyViewed.map(id=>DB.find(d=>d.id===id)).filter(Boolean).slice(0,4);
+  document.getElementById('recentTitle').style.display = recentItems.length ? 'block' : 'none';
+  document.getElementById('recentList').innerHTML = recentItems.map((q,i)=>renderCard(q, i, false, false)).join('');
+
+  const bmCount = {};
+  bookmarks.forEach(id=>{ const q=DB.find(d=>d.id===id); if(q) bmCount[q.tech]=(bmCount[q.tech]||0)+1; });
+  const vwCount = {};
+  recentlyViewed.forEach(id=>{ const q=DB.find(d=>d.id===id); if(q) vwCount[q.tech]=(vwCount[q.tech]||0)+1; });
+  const combined = {};
+  TECHS.forEach(t=>combined[t.id]=(bmCount[t.id]||0)*2+(vwCount[t.id]||0));
+  const top = TECHS.slice().sort((a,b)=>combined[b.id]-combined[a.id])[0];
+  if(top && combined[top.id]>0){
+    document.getElementById('recoTitle').style.display='block';
+    document.getElementById('recoText').innerHTML = `Based on what you've bookmarked and viewed, you might want to dig deeper into <b style="color:var(--primary);">${top.name}</b> — try the <a href="#" onclick="event.preventDefault();goView('tech','${top.id}')" style="color:var(--primary);font-weight:700;">question bank</a> or a <a href="#" onclick="event.preventDefault();startQuiz('${top.id}')" style="color:var(--primary);font-weight:700;">practice quiz</a>.`;
+  } else {
+    document.getElementById('recoTitle').style.display='none';
+  }
+}
+function toggleTechAccordion(id){
+  document.getElementById('acc-'+id).classList.toggle('expanded');
+}
+
+/* ============ BOOKMARKS ============ */
+function renderBookmarks(){
+  const items = [...bookmarks].map(id=>DB.find(d=>d.id===id)).filter(Boolean);
+  const el = document.getElementById('bookmarksList');
+  if(items.length===0){ el.innerHTML=`<div class="emptyState"><div class="em-badge">&#9733;</div>No bookmarks yet — star any question to save it here for quick revision.</div>`; return; }
+  el.innerHTML = items.map((q,i)=>renderCard(q, i, false, false)).join('');
+}
+
+/* ============ QUESTIONS (user view) ============ */
+function getFilteredList(tech, searchId, diffId, sortId){
+  let list = DB.filter(d=>d.tech===tech);
+  const search = document.getElementById(searchId).value.trim().toLowerCase();
+  const diff = document.getElementById(diffId).value;
+  if(diff!=='all') list = list.filter(d=>d.difficulty===diff);
+  if(search) list = list.filter(d=> d.question.toLowerCase().includes(search) || d.answer.toLowerCase().includes(search));
+  const sortMode = sortId ? document.getElementById(sortId).value : 'custom';
+  if(sortMode==='az') list = [...list].sort((a,b)=>a.question.localeCompare(b.question));
+  else if(sortMode==='difficulty'){ const rank={basic:0,advanced:1,architect:2}; list=[...list].sort((a,b)=>rank[a.difficulty]-rank[b.difficulty]); }
+  else if(sortMode==='random') list = [...list].sort((a,b)=>(a._rand||Math.random())-(b._rand||Math.random()));
+  else list = [...list].sort((a,b)=>a.order-b.order);
+  return list;
+}
+function handleSortChange(){
+  if(document.getElementById('sortMode').value==='random'){ DB.filter(d=>d.tech===currentTech).forEach(d=>d._rand=Math.random()); }
+  renderQuestions();
+}
+function renderQuestions(){
+  const list = getFilteredList(currentTech,'searchInput','filterDifficulty','sortMode');
+  const el = document.getElementById('qList');
+  if(list.length===0){ el.innerHTML=`<div class="emptyState"><div class="em-badge">?</div>No questions match yet. Try clearing filters or add a new one.</div>`; return; }
+  const draggable = document.getElementById('sortMode').value==='custom';
+  el.innerHTML = list.map((q, idx)=>renderCard(q, idx, draggable, false)).join('');
+}
+function renderCard(q, idx, draggable, adminMode){
+  const isOpen = openCardId===q.id;
+  return `<div class="qCard ${isOpen?'open':''}" draggable="${draggable}" data-id="${q.id}"
+      ondragstart="onDragStart(event)" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">
+    <div class="qHead">
+      ${draggable? `<div class="dragHandle" title="Drag to reorder">&#8942;&#8942;</div>` : `<div style="width:14px;"></div>`}
+      <div class="qMain" onclick="toggleCard('${q.id}', ${adminMode})">
+        <div class="qMeta"><span class="diffBadge ${q.difficulty}">${q.difficulty}</span><span class="orderTag">#${idx+1}</span></div>
+        <div class="qText">${escapeHtml(q.question)}${(q.images&&q.images.length) ? `<button class="imgIcon" title="Preview attached image" onclick="event.stopPropagation();openLightbox('${q.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="M21 15l-5-5L5 21"></path></svg></button>` : ''}</div>
+      </div>
+      <div class="qActions">
+        <button class="bookmarkStar ${isBookmarked(q.id)?'active':''}" title="Bookmark this question" onclick="event.stopPropagation();toggleBookmark('${q.id}', ${adminMode})">&#9733;</button>
+        <button class="iconBtn" title="Edit" onclick="event.stopPropagation();openQuestionModal('${q.id}','${q.tech}')">&#9998;</button>
+        <button class="iconBtn danger" title="Delete" onclick="event.stopPropagation();deleteQuestion('${q.id}', ${adminMode})">&#128465;</button>
+      </div>
+      <div class="chevron" onclick="toggleCard('${q.id}', ${adminMode})">&#9662;</div>
+    </div>
+    ${isOpen ? `<div class="answerPanel">${renderAnswerHtml(q)}</div>` : ''}
+  </div>`;
+}
+function renderAnswerHtml(q){
+  const images = q.images||[];
+  const text = q.answer||'';
+  if(!/\[\[img:\d+\]\]/.test(text)){
+    return escapeHtml(text) + images.map(src=>`<div class="inlineImgWrap"><img src="${src}"></div>`).join('');
+  }
+  const parts = text.split(/(\[\[img:\d+\]\])/g);
+  return parts.map(part=>{
+    const m = part.match(/^\[\[img:(\d+)\]\]$/);
+    if(m){
+      const src = images[parseInt(m[1])];
+      return src ? `<div class="inlineImgWrap"><img src="${src}"></div>` : '';
+    }
+    return escapeHtml(part);
+  }).join('');
+}
+function openLightbox(qid){
+  const q = DB.find(d=>d.id===qid);
+  if(!q || !q.images || !q.images.length) return;
+  document.getElementById('lightboxImg').src = q.images[0];
+  document.getElementById('lightboxOverlay').classList.remove('hidden');
+}
+function closeLightbox(){ document.getElementById('lightboxOverlay').classList.add('hidden'); }
+let bookmarks = new Set();
+let recentlyViewed = []; // array of question ids, most recent first
+function isBookmarked(id){ return bookmarks.has(id); }
+function toggleBookmark(id, adminMode){
+  if(bookmarks.has(id)) bookmarks.delete(id); else bookmarks.add(id);
+  showToast(bookmarks.has(id) ? 'Added to bookmarks' : 'Removed from bookmarks');
+  if(currentView==='bookmarks') renderBookmarks();
+  else adminMode ? renderAdminContent() : renderQuestions();
+}
+function trackRecentlyViewed(id){
+  recentlyViewed = recentlyViewed.filter(x=>x!==id);
+  recentlyViewed.unshift(id);
+  if(recentlyViewed.length>8) recentlyViewed.pop();
+}
+function toggleCard(id, adminMode){
+  openCardId = openCardId===id ? null : id;
+  if(openCardId) trackRecentlyViewed(id);
+  adminMode ? renderAdminContent() : renderQuestions();
+  if(currentView==='dashboard') renderDashboard();
+}
+function escapeHtml(str){ const div=document.createElement('div'); div.textContent=str; return div.innerHTML; }
+
+let dragId=null;
+function onDragStart(e){ dragId = e.currentTarget.dataset.id; e.currentTarget.classList.add('dragging'); }
+function onDragOver(e){ e.preventDefault(); }
+function onDrop(e){
+  e.preventDefault();
+  const targetId = e.currentTarget.dataset.id;
+  if(!dragId || dragId===targetId) return;
+  const tech = DB.find(d=>d.id===dragId).tech;
+  const list = DB.filter(d=>d.tech===tech).sort((a,b)=>a.order-b.order);
+  const fromIdx = list.findIndex(d=>d.id===dragId), toIdx = list.findIndex(d=>d.id===targetId);
+  const [moved] = list.splice(fromIdx,1); list.splice(toIdx,0,moved);
+  list.forEach((d,i)=>d.order=i);
+  currentView==='admin-content' ? renderAdminContent() : renderQuestions();
+  showToast('Question order updated');
+}
+function onDragEnd(e){ e.currentTarget.classList.remove('dragging'); }
+
+function deleteQuestion(id, adminMode){
+  if(!confirm('Delete this question and its answer?')) return;
+  DB = DB.filter(d=>d.id!==id);
+  renderTechNav();
+  adminMode ? renderAdminContent() : renderQuestions();
+  showToast('Question deleted');
+}
+
+/* ============ QUESTION MODAL ============ */
+function openQuestionModal(id, techOverride){
+  editingId = id || null;
+  editingTechForAdmin = techOverride || currentTech || adminTech;
+  pendingImages = [];
+  const item = id ? DB.find(d=>d.id===id) : null;
+  document.getElementById('qModalTitle').textContent = id ? 'Edit question' : 'Add question';
+  document.getElementById('qInput').value = item ? item.question : '';
+  document.getElementById('aInput').value = item ? item.answer : '';
+  pendingImages = item ? [...(item.images||[])] : [];
+  renderDifficultyPicker(item ? item.difficulty : 'basic');
+  updateCount('qInput','qCount',1000); updateCount('aInput','aCount',5000);
+  renderImgRow();
+  document.getElementById('qModalOverlay').classList.remove('hidden');
+}
+function closeQuestionModal(){ document.getElementById('qModalOverlay').classList.add('hidden'); }
+
+let selectedDifficulty='basic';
+function renderDifficultyPicker(sel){
+  selectedDifficulty = sel;
+  const el = document.getElementById('difficultyPicker');
+  const opts=[['basic','Basic'],['advanced','Advanced'],['architect','Architect']];
+  el.innerHTML = opts.map(([v,l])=>`<div class="diffOpt ${v===sel?'sel '+v:''}" onclick="pickDifficulty('${v}')">${l}</div>`).join('');
+}
+function pickDifficulty(v){ selectedDifficulty=v; renderDifficultyPicker(v); }
+function wordCount(str){ return str.trim().length ? str.trim().split(/\s+/).length : 0; }
+function updateCount(inputId,countId,max){
+  const val=document.getElementById(inputId).value; const wc=wordCount(val);
+  const el=document.getElementById(countId); el.textContent=`${wc} / ${max} words`; el.classList.toggle('over', wc>max);
+}
+function handleImageUpload(e){
+  const files=Array.from(e.target.files);
+  const ta = document.getElementById('aInput');
+  files.forEach(f=>{
+    const reader=new FileReader();
+    reader.onload=()=>{
+      pendingImages.push(reader.result);
+      const idx = pendingImages.length-1;
+      const marker = `\n[[img:${idx}]]\n`;
+      const pos = ta.selectionStart || ta.value.length;
+      ta.value = ta.value.slice(0,pos) + marker + ta.value.slice(pos);
+      updateCount('aInput','aCount',5000);
+      renderImgRow();
+    };
+    reader.readAsDataURL(f);
+  });
+  e.target.value='';
+}
+function renderImgRow(){
+  const el=document.getElementById('imgUploadRow');
+  if(pendingImages.length===0){ el.innerHTML = `<span style="font-size:12px;color:var(--muted);">No images inserted yet — click the image icon above.</span>`; return; }
+  el.innerHTML = pendingImages.map((src,i)=>`<div class="imgThumb"><img src="${src}"><button class="rm" title="Remove" onclick="removeImg(${i})">&#10005;</button></div>`).join('');
+}
+function removeImg(i){
+  pendingImages.splice(i,1);
+  const ta = document.getElementById('aInput');
+  ta.value = ta.value.replace(new RegExp(`\\n?\\[\\[img:${i}\\]\\]\\n?`), '');
+  // reindex remaining markers
+  ta.value = ta.value.replace(/\[\[img:(\d+)\]\]/g, (m, n)=>{ n=parseInt(n); return `[[img:${n>i?n-1:n}]]`; });
+  updateCount('aInput','aCount',5000);
+  renderImgRow();
+}
+
+function saveQuestion(){
+  const q=document.getElementById('qInput').value.trim(), a=document.getElementById('aInput').value.trim();
+  if(!q || !a){ showToast('Question and answer are required'); return; }
+  if(wordCount(q)>1000){ showToast('Question exceeds 1,000 word limit'); return; }
+  if(wordCount(a)>5000){ showToast('Answer exceeds 5,000 word limit'); return; }
+  if(editingId){
+    const item=DB.find(d=>d.id===editingId);
+    item.question=q; item.answer=a; item.difficulty=selectedDifficulty; item.images=[...pendingImages];
+    showToast('Question updated');
+  } else {
+    const tech = editingTechForAdmin;
+    const maxOrder=Math.max(-1, ...DB.filter(d=>d.tech===tech).map(d=>d.order));
+    DB.push({id:uid(), tech, difficulty:selectedDifficulty, question:q, answer:a, images:[...pendingImages], order:maxOrder+1});
+    showToast('Question added');
+  }
+  closeQuestionModal();
+  renderTechNav();
+  if(currentView==='admin-content') renderAdminContent(); else renderQuestions();
+}
+
+/* ============ PERSONALITY DEVELOPMENT ============ */
+function renderPersonality(){
+  const search = document.getElementById('pdSearch').value.trim().toLowerCase();
+  const list = PD.filter(p=> !search || p.title.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search));
+  const el = document.getElementById('pdGrid');
+  if(list.length===0){ el.innerHTML=`<div class="emptyState"><div class="em-badge">?</div>No topics match your search.</div>`; return; }
+  el.innerHTML = list.map(p=>`<div class="pdCard" onclick="openArticle('${p.key}')"><div class="pdIcon">${p.icon}</div><h4>${p.title}</h4><p>${p.desc}</p></div>`).join('');
+}
+function openArticle(key){
+  const p = PD.find(x=>x.key===key);
+  document.getElementById('articleTitle').textContent = p.title;
+  document.getElementById('articleBody').innerHTML = p.body;
+  document.getElementById('articleOverlay').classList.remove('hidden');
+}
+function closeArticle(){ document.getElementById('articleOverlay').classList.add('hidden'); }
+
+/* ============ ADMIN: USERS ============ */
+function renderAdminUsers(){
+  const search=(document.getElementById('userSearch').value||'').trim().toLowerCase();
+  const statusFilter=document.getElementById('userStatusFilter').value;
+  let rows = Object.entries(users);
+  if(statusFilter!=='all') rows = rows.filter(([email,u])=>u.status===statusFilter);
+  if(search) rows = rows.filter(([email,u])=> email.includes(search) || u.name.toLowerCase().includes(search));
+  const body = document.getElementById('usersTableBody');
+  if(rows.length===0){ body.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px;">No users match.</td></tr>`; return; }
+  body.innerHTML = rows.map(([email,u])=>{
+    const initial = u.name.charAt(0).toUpperCase();
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:10px;"><div class="miniAvatar">${initial}</div><div><div style="font-weight:700;">${escapeHtml(u.name)}</div><div style="color:var(--muted);font-size:12px;">${escapeHtml(email)}</div></div></div></td>
+      <td><span class="statusPill ${u.status}">${u.status}</span></td>
+      <td class="mono" style="font-size:12px;">${fmtDate(u.createdAt)}</td>
+      <td class="mono" style="font-size:12px;">${u.lastLogin ? fmtDate(u.lastLogin) : '—'}</td>
+      <td class="mono" style="font-size:12px;">${u.loginCount||0}</td>
+      <td>
+        <div style="display:flex;gap:6px;">
+          <button class="iconBtn" title="View profile" onclick="viewUserProfile('${email}')">&#128065;</button>
+          ${u.status!=='approved' ? `<button class="iconBtn" title="Approve" onclick="setUserStatus('${email}','approved')">&#10003;</button>` : ''}
+          ${u.status!=='rejected' ? `<button class="iconBtn danger" title="Reject" onclick="setUserStatus('${email}','rejected')">&#10005;</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+function fmtDate(d){ if(!d) return '—'; const dt = new Date(d); return dt.toLocaleDateString()+' '+dt.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}); }
+function setUserStatus(email, status){
+  users[email].status = status;
+  logActivity(email, status==='approved' ? 'Approved by admin' : 'Registration rejected by admin');
+  renderAdminUsers();
+  if(currentView==='admin-dashboard') renderAdminDashboard();
+  showToast(`${email} marked as ${status}`);
+}
+function viewUserProfile(email){
+  const u = users[email];
+  document.getElementById('userViewBody').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+      <div class="profileAvatar" style="margin:0;">${u.name.charAt(0).toUpperCase()}</div>
+      <div><div style="font-weight:700;font-size:15px;">${escapeHtml(u.name)}</div><div style="color:var(--muted);font-size:13px;">${escapeHtml(email)}</div></div>
+    </div>
+    <table class="table">
+      <tr><td style="color:var(--muted);">Status</td><td><span class="statusPill ${u.status}">${u.status}</span></td></tr>
+      <tr><td style="color:var(--muted);">Registered</td><td>${fmtDate(u.createdAt)}</td></tr>
+      <tr><td style="color:var(--muted);">Last login</td><td>${u.lastLogin ? fmtDate(u.lastLogin) : 'Never'}</td></tr>
+      <tr><td style="color:var(--muted);">Total logins</td><td>${u.loginCount||0}</td></tr>
+    </table>`;
+  document.getElementById('userViewOverlay').classList.remove('hidden');
+}
+
+/* ============ ADMIN: CONTENT MANAGER ============ */
+function renderAdminContentTabs(){
+  const el = document.getElementById('adminTechTabs');
+  el.innerHTML = TECHS.map(t=>`<button class="btn ${t.id===adminTech?'active':''}" onclick="setAdminTech('${t.id}')">${t.name}</button>`).join('');
+  document.getElementById('adminSearch').value='';
+  renderAdminContent();
+}
+function setAdminTech(id){ adminTech = id; renderAdminContentTabs(); }
+function renderAdminContent(){
+  const search = document.getElementById('adminSearch').value.trim().toLowerCase();
+  let list = DB.filter(d=>d.tech===adminTech).sort((a,b)=>a.order-b.order);
+  if(search) list = list.filter(d=>d.question.toLowerCase().includes(search) || d.answer.toLowerCase().includes(search));
+  const el = document.getElementById('adminQList');
+  if(list.length===0){ el.innerHTML=`<div class="emptyState"><div class="em-badge">?</div>No questions yet for this technology.</div>`; return; }
+  el.innerHTML = list.map((q,idx)=>renderCard(q, idx, true, true)).join('');
+}
+
+/* ============ ADMIN: DASHBOARD ============ */
+function renderAdminDashboard(){
+  const allUsers = Object.entries(users);
+  const totalUsers = allUsers.length;
+  const approved = allUsers.filter(([,u])=>u.status==='approved').length;
+  const pending = allUsers.filter(([,u])=>u.status==='pending').length;
+  const active = allUsers.filter(([,u])=>u.lastLogin && (Date.now()-new Date(u.lastLogin).getTime()) < 30*86400000).length;
+  const totalQuestions = DB.length;
+  const totalImages = DB.reduce((s,d)=>s+(d.images?d.images.length:0),0);
+
+  document.getElementById('adminKpiRow').innerHTML = `
+    <div class="kpiCard"><div class="num">${totalUsers}</div><div class="lbl">Total registered users</div></div>
+    <div class="kpiCard"><div class="num">${active}</div><div class="lbl">Active users (30 days)</div></div>
+    <div class="kpiCard"><div class="num">${pending}</div><div class="lbl">Pending approval requests</div></div>
+    <div class="kpiCard"><div class="num">${totalQuestions}</div><div class="lbl">Total questions</div></div>`;
+
+  document.getElementById('healthRow').innerHTML = `
+    <div class="kpiCard"><div class="num" style="color:var(--basic);">Operational</div><div class="lbl">System status</div></div>
+    <div class="kpiCard"><div class="num">${totalImages}</div><div class="lbl">Images uploaded</div></div>
+    <div class="kpiCard"><div class="num">${approved}</div><div class="lbl">Approved users</div></div>
+    <div class="kpiCard"><div class="num">${allUsers.filter(([,u])=>u.status==='rejected').length}</div><div class="lbl">Rejected requests</div></div>`;
+
+  const totalImgBytes = DB.reduce((sum,d)=>sum + (d.images||[]).reduce((s,src)=>s+src.length*0.75,0), 0);
+  const usedMB = totalImgBytes/1024/1024;
+  const capacityMB = 512; // simulated free-tier database/storage cap for this demo
+  const pct = Math.min(100, (usedMB/capacityMB)*100);
+  document.getElementById('storageBlock').innerHTML = `
+    <div class="storageRow"><span>Storage used</span><span>${usedMB.toFixed(2)} MB / ${capacityMB} MB (simulated free-tier cap)</span></div>
+    <div class="storageBar"><div style="width:${pct}%;"></div></div>
+    <div class="storageNote">Estimate based on ${totalImages} uploaded image(s) across ${totalQuestions} questions, held in-memory for this session. A production deployment would report real usage from the configured database and object storage provider, and would alert admins as usage approaches plan limits.</div>`;
+
+  document.getElementById('techStatsBody').innerHTML = TECHS.map(t=>{
+    const items = DB.filter(d=>d.tech===t.id);
+    const b=items.filter(i=>i.difficulty==='basic').length, a=items.filter(i=>i.difficulty==='advanced').length, ar=items.filter(i=>i.difficulty==='architect').length;
+    const imgs = items.reduce((s,i)=>s+(i.images?i.images.length:0),0);
+    return `<tr><td style="font-weight:700;">${t.name}</td><td>${b}</td><td>${a}</td><td>${ar}</td><td>${items.length}</td><td>${imgs}</td></tr>`;
+  }).join('');
+
+  document.getElementById('activityLogBody').innerHTML = activityLog.slice(0,25).map(l=>
+    `<tr><td>${escapeHtml(l.user)}</td><td>${escapeHtml(l.event)}</td><td class="mono" style="font-size:12px;">${fmtDate(l.ts)}</td></tr>`
+  ).join('') || `<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px;">No activity yet.</td></tr>`;
+}
+
+/* ============ ADMIN: ABOUT SYSTEM (admin-only technical info) ============ */
+function renderAdminSystem(){
+  const cards = [
+    {h:'Frontend', items:[
+      '<b>Framework:</b> Static HTML5 + vanilla JavaScript (ES6) prototype',
+      '<b>Styling:</b> Custom CSS with design tokens (Olive Green theme)',
+      '<b>Fonts:</b> Sora (display), Plus Jakarta Sans (body), JetBrains Mono (data/tags)',
+      '<b>Recommended production stack:</b> React.js / Next.js with Tailwind CSS'
+    ]},
+    {h:'Backend', items:[
+      '<b>Current demo:</b> In-browser JS state only, no server',
+      '<b>Recommended:</b> Node.js with Express.js REST API',
+      '<b>API style:</b> REST endpoints for users, questions, categories, uploads',
+      '<b>Recommended process manager:</b> PM2 or containerized deployment'
+    ]},
+    {h:'Database', items:[
+      '<b>Current demo:</b> None — in-memory session data, resets on reload',
+      '<b>Recommended:</b> PostgreSQL (relational) or MongoDB (document store)',
+      '<b>Core tables/collections:</b> users, questions, answers, categories, activity_log',
+      '<b>Free-tier options:</b> Supabase, Neon, Railway, or MongoDB Atlas free tier'
+    ]},
+    {h:'Authentication', items:[
+      '<b>Current demo:</b> Client-side mock auth with an approval-status flag',
+      '<b>Recommended:</b> JWT-based sessions or NextAuth',
+      '<b>Password storage:</b> bcrypt/argon2 hashing, never stored in plain text',
+      '<b>Admin account:</b> Provisioned directly in the backend, not exposed via signup'
+    ]},
+    {h:'Hosting & Deployment', items:[
+      '<b>Frontend hosting:</b> Vercel or Netlify (free tier)',
+      '<b>Backend hosting:</b> Render, Railway, or Fly.io (free/low-cost tier)',
+      '<b>Object/image storage:</b> Supabase Storage or Cloudinary free tier',
+      '<b>CI/CD:</b> Git-based auto-deploy on push to main branch'
+    ]},
+    {h:'Architecture Overview', items:[
+      '<b>Pattern:</b> Client-server, REST API, relational or document database',
+      '<b>Auth boundary:</b> Approval-gated login; admin routes protected server-side',
+      '<b>Content model:</b> Technology → Difficulty level → Question → Answer (+ images)',
+      '<b>Extensibility:</b> New technology categories and difficulty levels are config-driven'
+    ]},
+    {h:'Third-Party Integrations', items:[
+      '<b>Current demo:</b> Google Fonts (Sora, Plus Jakarta Sans, JetBrains Mono)',
+      '<b>Planned:</b> Email delivery for verification / password reset (e.g. Resend, SendGrid free tier)',
+      '<b>Planned:</b> Image storage/CDN provider',
+      '<b>None of the above process payment or personal data beyond account email today</b>'
+    ]},
+    {h:'Version & Release', items:[
+      `<b>Application:</b> AbTechie`,
+      `<b>Build:</b> v3.0 — Olive Green theme, Admin Dashboard, Personality Development`,
+      `<b>Environment:</b> Local prototype / demo build`,
+      `<b>Last updated:</b> ${new Date().toLocaleDateString()}`
+    ]},
+  ];
+  document.getElementById('sysGrid').innerHTML = cards.map(c=>`<div class="sysCard"><h4>${c.h}</h4><ul>${c.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`).join('');
+}
+
+/* ============ QUIZ ENGINE ============ */
+let quiz = null; // {tech, questions:[{q, options:[], correctIndex}], answers:[selectedIndex or null], current}
+
+/* ============ TUTORIALS ENGINE ============ */
+let tutorialProgress = new Set(); // completed lesson ids
+let lastViewedLesson = {}; // techId -> lessonId
+let currentLessonId = null;
+let tutorialBookmarks = new Set();
+
+function allLessonsFor(tech){ return TUTORIAL_TRACKS[tech]; }
+function trackProgressPct(tech){
+  const lessons = allLessonsFor(tech);
+  const done = lessons.filter(l=>tutorialProgress.has(l.id)).length;
+  return lessons.length ? Math.round((done/lessons.length)*100) : 0;
+}
+
+function renderTutorialsHome(){
+  const search = (document.getElementById('tutSearch').value||'').trim().toLowerCase();
+  const continueEntries = Object.entries(lastViewedLesson).filter(([tech,id])=>TUTORIAL_TRACKS[tech].some(l=>l.id===id));
+  document.getElementById('tutContinueTitle').style.display = continueEntries.length ? 'block' : 'none';
+  document.getElementById('tutContinueGrid').innerHTML = continueEntries.map(([tech,id])=>{
+    const t = TECHS.find(x=>x.id===tech);
+    const lesson = TUTORIAL_TRACKS[tech].find(l=>l.id===id);
+    return `<div class="statCard" onclick="openLesson('${id}')">
+      <div class="navBadge" style="background:${t.color}1A;color:${t.color};">${t.short}</div>
+      <div class="lbl" style="margin-top:8px;">Continue: <b style="color:var(--text);">${escapeHtml(lesson.title)}</b></div>
+      <div class="breakdown">${trackProgressPct(tech)}% complete &#8594;</div>
+    </div>`;
+  }).join('');
+
+  let tracks = TECHS;
+  if(search){
+    tracks = TECHS.filter(t=> t.name.toLowerCase().includes(search) || TUTORIAL_TOPICS[t.id].some(topic=>topic.toLowerCase().includes(search)));
+  }
+  document.getElementById('tutTrackGrid').innerHTML = tracks.map(t=>{
+    const total = TUTORIAL_TOPICS[t.id].length;
+    const pct = trackProgressPct(t.id);
+    return `<div class="statCard" onclick="goView('tutorials-track','${t.id}')">
+      <div class="navBadge" style="background:${t.color}1A;color:${t.color};">${t.short}</div>
+      <div class="num">${total}</div><div class="lbl">${t.name} lessons</div>
+      <div class="tutProgressBar" style="margin-top:10px;"><div style="width:${pct}%;"></div></div>
+      <div class="breakdown" style="margin-top:6px;">${pct}% complete</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTutorialsTrack(tech){
+  const lessons = allLessonsFor(tech);
+  const t = TECHS.find(x=>x.id===tech);
+  document.getElementById('tutChapterList').innerHTML = `<div class="tutChapterHead">${t.name} · Chapters</div>` +
+    lessons.map(l=>`<div class="tutChapterItem" onclick="openLesson('${l.id}')">
+      <span class="doneDot ${tutorialProgress.has(l.id)?'done':''}"></span>${escapeHtml(l.title)}</div>`).join('');
+  const pct = trackProgressPct(tech);
+  document.getElementById('tutTrackMain').innerHTML = `
+    <div class="tutTrackHero">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <div class="navBadge" style="background:${t.color}1A;color:${t.color};width:38px;height:38px;font-size:12px;">${t.short}</div>
+        <div><div style="font-weight:700;font-size:16px;">${t.name} Tutorials</div><div style="color:var(--muted);font-size:12.5px;">${lessons.length} lessons · beginner to advanced</div></div>
+      </div>
+      <div class="tutProgressBar"><div style="width:${pct}%;"></div></div>
+      <div style="color:var(--muted);font-size:12px;margin-top:6px;">${pct}% complete</div>
+      <button class="btn primary" style="margin-top:14px;" onclick="openLesson('${lessons[0].id}')">${pct>0?'Continue':'Start'} learning &#8594;</button>
+    </div>
+    <div class="qList">
+      ${lessons.map((l,i)=>`<div class="qCard" onclick="openLesson('${l.id}')" style="cursor:pointer;">
+        <div class="qHead"><div style="width:14px;"></div>
+        <div class="qMain"><div class="qMeta"><span class="orderTag">Chapter ${i+1}</span><span class="readTimeChip mono">${l.estMinutes} min read</span>${tutorialProgress.has(l.id)?'<span class="statusPill approved">Completed</span>':''}</div>
+        <div class="qText">${escapeHtml(l.title)}</div></div></div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function openLesson(id){
+  currentLessonId = id;
+  const lesson = findLesson(id);
+  if(!lesson) return;
+  lastViewedLesson[lesson.tech] = id;
+  trackRecentlyViewed(id);
+  goView('tutorials-lesson');
+}
+function findLesson(id){
+  for(const tech in TUTORIAL_TRACKS){ const l = TUTORIAL_TRACKS[tech].find(x=>x.id===id); if(l) return l; }
+  return null;
+}
+function renderTutorialsLesson(){
+  const lesson = findLesson(currentLessonId);
+  if(!lesson){ goView('tutorials-home'); return; }
+  const t = TECHS.find(x=>x.id===lesson.tech);
+  const lessons = allLessonsFor(lesson.tech);
+  const idx = lessons.findIndex(l=>l.id===lesson.id);
+  renderBreadcrumb(['Overview','Tutorials', t.name, lesson.title]);
+  document.getElementById('pageTitle').textContent = lesson.title;
+  document.getElementById('pageSub').textContent = `${t.name} Tutorials · Chapter ${idx+1} of ${lessons.length}`;
+
+  document.getElementById('tutLessonSidebar').innerHTML = `<div class="tutChapterHead">${t.name} · Chapters</div>` +
+    lessons.map(l=>`<div class="tutChapterItem ${l.id===lesson.id?'active':''}" onclick="openLesson('${l.id}')">
+      <span class="doneDot ${tutorialProgress.has(l.id)?'done':''}"></span>${escapeHtml(l.title)}</div>`).join('');
+
+  const c = lesson.content;
+  const isDone = tutorialProgress.has(lesson.id);
+  document.getElementById('tutLessonMain').innerHTML = `
+    <div class="tutProgressBar tutProgressWrap"><div style="width:${((idx+1)/lessons.length)*100}%;"></div></div>
+    <div class="lessonCard">
+      <div class="lessonMeta">
+        <span class="readTimeChip mono">&#9200; ${lesson.estMinutes} min read</span>
+        <span class="mono">Chapter ${idx+1} of ${lessons.length}</span>
+        <button class="bookmarkStar ${tutorialBookmarks.has(lesson.id)?'active':''}" onclick="toggleTutorialBookmark('${lesson.id}')" title="Bookmark this lesson">&#9733;</button>
+      </div>
+      <div class="lessonTitle">${escapeHtml(lesson.title)}</div>
+      <div class="lessonBody">
+        <p>${escapeHtml(c.overview)}</p>
+        ${c.analogy ? `<div class="lessonAnalogy">&#128161; ${escapeHtml(c.analogy)}</div>` : ''}
+        <div class="lessonSectionLbl">Step-by-step</div>
+        <ul>${c.steps.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+        <div class="lessonSectionLbl">Real-world use case</div>
+        <p>${escapeHtml(c.useCase)}</p>
+        <div class="lessonSectionLbl">Practical project scenario</div>
+        <p>${escapeHtml(c.scenario)}</p>
+        <div class="lessonSectionLbl">Best practices</div>
+        <ul>${c.bestPractices.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+        <div class="lessonSectionLbl">Common mistakes &amp; troubleshooting</div>
+        <ul>${c.mistakes.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+        <div class="lessonSectionLbl">Key takeaways</div>
+        <ul>${c.takeaways.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul>
+        ${c.interviewTip ? `<div class="lessonSectionLbl">Interview tip</div><p>${escapeHtml(c.interviewTip)}</p>` : ''}
+      </div>
+      <div class="lessonNavRow">
+        <button class="btn" ${idx===0?'disabled style="visibility:hidden;"':''} onclick="pageLesson(-1)">&#8592; Previous lesson</button>
+        <button class="btn markDoneBtn ${isDone?'done':''}" onclick="toggleLessonDone('${lesson.id}')">${isDone?'&#10003; Completed':'Mark as complete'}</button>
+        <button class="btn primary" ${idx===lessons.length-1?'style="visibility:hidden;"':''} onclick="pageLesson(1)">Next lesson &#8594;</button>
+      </div>
+    </div>`;
+}
+function pageLesson(dir){
+  const lesson = findLesson(currentLessonId);
+  const lessons = allLessonsFor(lesson.tech);
+  const idx = lessons.findIndex(l=>l.id===lesson.id);
+  const next = lessons[idx+dir];
+  if(next) openLesson(next.id);
+}
+function toggleLessonDone(id){
+  if(tutorialProgress.has(id)) tutorialProgress.delete(id); else tutorialProgress.add(id);
+  showToast(tutorialProgress.has(id) ? 'Marked as complete' : 'Marked as incomplete');
+  renderTutorialsLesson();
+}
+function toggleTutorialBookmark(id){
+  if(tutorialBookmarks.has(id)) tutorialBookmarks.delete(id); else tutorialBookmarks.add(id);
+  showToast(tutorialBookmarks.has(id) ? 'Lesson bookmarked' : 'Bookmark removed');
+  renderTutorialsLesson();
+}
+
+function renderQuizPicker(){
+  document.getElementById('quizPickerGrid').innerHTML = TECHS.map(t=>{
+    const count = DB.filter(d=>d.tech===t.id).length;
+    return `<div class="statCard" onclick="startQuiz('${t.id}')">
+      <div class="navBadge" style="background:${t.color}1A;color:${t.color};">${t.short}</div>
+      <div class="num">${Math.min(20,count)}</div><div class="lbl">${t.name} quiz questions</div>
+      <div class="breakdown">Tap to start &#8594;</div>
+    </div>`;
+  }).join('');
+}
+
+function truncateWords(str, n){
+  const words = str.trim().split(/\s+/);
+  return words.length<=n ? str.trim() : words.slice(0,n).join(' ') + '…';
+}
+
+function startQuiz(tech){
+  const pool = DB.filter(d=>d.tech===tech);
+  if(pool.length===0){ showToast('No questions available for this technology yet'); return; }
+  const size = Math.min(20, pool.length);
+  // balance across difficulty as evenly as possible
+  const byDiff = {basic:pool.filter(q=>q.difficulty==='basic'), advanced:pool.filter(q=>q.difficulty==='advanced'), architect:pool.filter(q=>q.difficulty==='architect')};
+  const shuffled = arr => [...arr].sort(()=>Math.random()-0.5);
+  let picks = [];
+  const perLevel = Math.ceil(size/3);
+  ['basic','advanced','architect'].forEach(d=>{ picks.push(...shuffled(byDiff[d]).slice(0,perLevel)); });
+  picks = shuffled(picks).slice(0,size);
+  if(picks.length<size){ // top up if uneven distribution left gaps
+    const remaining = shuffled(pool.filter(p=>!picks.includes(p)));
+    picks.push(...remaining.slice(0, size-picks.length));
+  }
+
+  const questions = picks.map(q=>{
+    const correctText = truncateWords(q.answer.split('\n\n')[0], 20);
+    const distractorPool = shuffled(pool.filter(p=>p.id!==q.id)).slice(0,3);
+    let options = [correctText, ...distractorPool.map(p=>truncateWords(p.answer.split('\n\n')[0], 20))];
+    // ensure 4 options even if pool is small, pad with generic distractors
+    while(options.length<4) options.push('None of the above / not applicable in this context');
+    const order = shuffled(options.map((_,i)=>i));
+    const shuffledOptions = order.map(i=>options[i]);
+    const correctIndex = order.indexOf(0);
+    return {id:q.id, question:q.question, difficulty:q.difficulty, fullAnswer:q.answer, options:shuffledOptions, correctIndex};
+  });
+
+  quiz = {tech, questions, answers: new Array(questions.length).fill(null), current:0};
+  goView('quiz-session');
+}
+
+function renderQuizSession(){
+  if(!quiz) { goView('quiz-picker'); return; }
+  const total = quiz.questions.length;
+  const idx = quiz.current;
+  const q = quiz.questions[idx];
+  document.getElementById('quizProgressLabel').textContent = `Question ${idx+1} of ${total}`;
+  document.getElementById('quizProgressFill').style.width = `${((idx+1)/total)*100}%`;
+  const letters=['A','B','C','D'];
+  document.getElementById('quizCardArea').innerHTML = `
+    <div class="quizQNum">${q.difficulty.toUpperCase()} · QUESTION ${idx+1}</div>
+    <div class="quizQText">${escapeHtml(q.question)}</div>
+    ${q.options.map((opt,i)=>`<div class="quizOption ${quiz.answers[idx]===i?'selected':''}" onclick="selectQuizOption(${i})">
+      <div class="quizOptLetter">${letters[i]}</div><div>${escapeHtml(opt)}</div>
+    </div>`).join('')}`;
+  document.getElementById('quizPrevBtn').style.visibility = idx===0 ? 'hidden' : 'visible';
+  document.getElementById('quizNextBtn').textContent = idx===total-1 ? 'Finish quiz' : 'Next →';
+  document.getElementById('quizDots').innerHTML = quiz.answers.map((a,i)=>
+    `<div class="quizDot ${a!==null?'answered':''} ${i===idx?'current':''}" onclick="jumpToQuizQuestion(${i})" style="cursor:pointer;"></div>`
+  ).join('');
+}
+function selectQuizOption(i){ quiz.answers[quiz.current]=i; renderQuizSession(); }
+function jumpToQuizQuestion(i){ quiz.current=i; renderQuizSession(); }
+function quizNav(dir){
+  if(dir>0 && quiz.current===quiz.questions.length-1){ finishQuiz(); return; }
+  quiz.current = Math.max(0, Math.min(quiz.questions.length-1, quiz.current+dir));
+  renderQuizSession();
+}
+function exitQuiz(){ if(confirm('Exit this quiz? Your progress will be lost.')){ quiz=null; goView('quiz-picker'); } }
+
+function finishQuiz(){
+  const total = quiz.questions.length;
+  let correct=0;
+  const diffStats = {basic:{a:0,c:0}, advanced:{a:0,c:0}, architect:{a:0,c:0}};
+  quiz.questions.forEach((q,i)=>{
+    const answered = quiz.answers[i]!==null;
+    if(answered) diffStats[q.difficulty].a++;
+    if(answered && quiz.answers[i]===q.correctIndex){ correct++; diffStats[q.difficulty].c++; }
+  });
+  const incorrect = total-correct;
+  const pct = Math.round((correct/total)*100);
+  goView('quiz-results');
+  document.getElementById('resultHero').innerHTML = `
+    <div class="bigScore">${pct}%</div>
+    <div class="scoreLbl">${correct} correct out of ${total} — ${TECHS.find(t=>t.id===quiz.tech).name} Practice Quiz</div>`;
+  document.getElementById('resultKpiRow').innerHTML = `
+    <div class="kpiCard"><div class="num">${total}</div><div class="lbl">Total questions</div></div>
+    <div class="kpiCard"><div class="num" style="color:var(--basic);">${correct}</div><div class="lbl">Correct answers</div></div>
+    <div class="kpiCard"><div class="num" style="color:var(--red);">${incorrect}</div><div class="lbl">Incorrect / skipped</div></div>
+    <div class="kpiCard"><div class="num">${pct}%</div><div class="lbl">Score percentage</div></div>`;
+  document.getElementById('resultDiffBody').innerHTML = ['basic','advanced','architect'].map(d=>{
+    const s = diffStats[d]; const acc = s.a>0 ? Math.round((s.c/s.a)*100) : 0;
+    return `<tr><td><span class="diffBadge ${d}">${d}</span></td><td>${s.a}</td><td>${s.c}</td><td>${acc}%</td></tr>`;
+  }).join('');
+  document.getElementById('resultReviewList').innerHTML = quiz.questions.map((q,i)=>{
+    const letters=['A','B','C','D'];
+    const userIdx = quiz.answers[i];
+    const isCorrect = userIdx===q.correctIndex;
+    return `<div class="qCard open"><div class="qHead"><div style="width:14px;"></div><div class="qMain">
+      <div class="qMeta"><span class="diffBadge ${q.difficulty}">${q.difficulty}</span><span class="orderTag">#${i+1}</span>
+      <span class="statusPill ${isCorrect?'approved':'rejected'}">${userIdx===null?'Skipped':(isCorrect?'Correct':'Incorrect')}</span></div>
+      <div class="qText">${escapeHtml(q.question)}</div></div></div>
+      <div class="answerPanel">
+        ${q.options.map((opt,oi)=>`<div class="quizOption ${oi===q.correctIndex?'correct':(oi===userIdx&&!isCorrect?'incorrect':'')}" style="cursor:default;">
+          <div class="quizOptLetter">${letters[oi]}</div><div>${escapeHtml(opt)}</div></div>`).join('')}
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line);"><b>Full explanation:</b><br>${escapeHtml(q.fullAnswer.replace(/\[\[img:\d+\]\]/g,'').trim())}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+/* ============ ADMIN: SYSTEM SETTINGS ============ */
+let systemSettings = { allowSignups:true, requireApproval:true, maintenanceMode:false, emailVerification:false };
+function renderAdminSettings(){
+  const rows = [
+    ['allowSignups','Allow new signups','Let visitors register a new account from the login screen'],
+    ['requireApproval','Require admin approval','New accounts stay Pending until an admin approves them'],
+    ['emailVerification','Email verification','Send a verification email on signup (simulated in this demo)'],
+    ['maintenanceMode','Maintenance mode','Show a maintenance notice to non-admin users (simulated)'],
+  ];
+  document.getElementById('settingsCard').innerHTML = rows.map(([key,label,desc])=>`
+    <div class="settingRow">
+      <div><strong>${label}</strong><span>${desc}</span></div>
+      <label class="switch"><input type="checkbox" ${systemSettings[key]?'checked':''} onchange="toggleSetting('${key}')"><span class="switchTrack"></span></label>
+    </div>`).join('');
+}
+function toggleSetting(key){
+  systemSettings[key] = !systemSettings[key];
+  showToast(`${key} ${systemSettings[key] ? 'enabled' : 'disabled'}`);
+}
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'), 2600);
+}
+</script>
+</body>
+</html>
